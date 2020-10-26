@@ -8,7 +8,6 @@ public class BookManager : MonoBehaviour
     
     public static BookManager instance;
     public Text gameTimer;
-    // Start is called before the first frame update
     public Dialogue dialogue;
     public bool firstOpen;
     private void Awake()

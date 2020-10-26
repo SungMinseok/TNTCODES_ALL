@@ -159,7 +159,7 @@ public class DatabaseManager : MonoBehaviour{
             itemList.Add(new Item(15, "Jackson Shoes","Maker has two left feet.",Item.ItemType.Wearable,true));
             itemList.Add(new Item(16, "Suspicious Note","There is something written on it.",Item.ItemType.Readable));
             itemList.Add(new Item(17, "Nana Milk","Maker's Favorite Milk",Item.ItemType.Wearable,true));
-            itemList.Add(new Item(18, "Hedgehog's Note","",Item.ItemType.Readable));
+            itemList.Add(new Item(18, "Hedgehog's Note","I think something important is in this note.",Item.ItemType.Readable));
             itemList.Add(new Item(19, "Red Apple","At first glance, It looks like heart.", Item.ItemType.Clickable));
             itemList.Add(new Item(20, "Pumpkin Stone","It's a pumpkin stone with worms inside.\nIt feels like time has stopped.", Item.ItemType.Clickable));
             itemList.Add(new Item(21, "Eye-shaped Rice","It is rice obtained from a field.\nIt is shaped like an eye.", Item.ItemType.Clickable));
@@ -183,7 +183,7 @@ public class DatabaseManager : MonoBehaviour{
             itemList.Add(new Item(15, "잭슨슈즈","제작자는 몸치에요.",Item.ItemType.Wearable,true));
             itemList.Add(new Item(16, "수상한 쪽지","무언가 적혀있다.",Item.ItemType.Readable));
             itemList.Add(new Item(17, "나나 우유","제작자의 최애 우유",Item.ItemType.Wearable,true));
-            itemList.Add(new Item(18, "고슴도치의 쪽지","",Item.ItemType.Readable));
+            itemList.Add(new Item(18, "남겨진 쪽지","누군가 중요한 내용을 적어 놓은 것 같다.",Item.ItemType.Readable));
             itemList.Add(new Item(19, "붉은 사과","언뜻 보면 심장처럼 보이는 모양의 사과다.", Item.ItemType.Clickable));
             itemList.Add(new Item(20, "호박석","안에 벌레가 간직된 호박석이다.\n시간이 멈춘 듯 보인다.", Item.ItemType.Clickable));
             itemList.Add(new Item(21, "눈모양 벼","밭에서 얻은 벼다.\n눈 모양을 하고있다.", Item.ItemType.Clickable));
