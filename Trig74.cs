@@ -131,6 +131,7 @@ public class Trig74 : MonoBehaviour
         #if UNITY_EDITOR
         
             BookManager.instance.firstOpen = true;
+            theDB.firstOpen = true;
             // PaperManager.instance.letter0.gameObject.SetActive(true);
             // PaperManager.instance.letter1.gameObject.SetActive(true);
             theDB.activatedPaper=6;
@@ -149,6 +150,9 @@ public class Trig74 : MonoBehaviour
         theDB.bookActivated = false;
         BookManager.instance.onButton.SetActive(false);
         thePlayer.notMove = true;
+#if DEV_MODE
+        InGameVideo.instance.skipBtn.SetActive(true);
+#endif
         //연출부
         for(int j=0; j<3; j++){
             yield return new WaitForSeconds(1f);
@@ -157,12 +161,22 @@ public class Trig74 : MonoBehaviour
                 ObjectManager.instance.ImageFadeIn(PaperManager.instance.paperUnlocked[2*j+i].GetComponent<Image>(),0.01f);
                 ObjectManager.instance.TextFadeIn(PaperManager.instance.textUnlocked[2*j+i],0.01f);
                 
-                
-                
-                yield return new WaitForSeconds(6f);//6
+                if(thePlayer.devMode){
+
+                    yield return new WaitForSeconds(0.1f);//6
+                }
+                else{
+                    
+                    yield return new WaitForSeconds(6f);//6
+                }
 
                 if(i==1&&j!=2){
-                    yield return new WaitForSeconds(3f);//3
+                    if(thePlayer.devMode){
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                    else{
+                        yield return new WaitForSeconds(3f);//3
+                    }
                     PaperManager.instance.paperUnlocked[2*j+i-1].SetActive(false);
                     PaperManager.instance.paperUnlocked[2*j+i].SetActive(false);
                     PaperManager.instance.textUnlocked[2*j+i-1].gameObject.SetActive(false);
@@ -173,6 +187,9 @@ public class Trig74 : MonoBehaviour
         }
 
 
+#if DEV_MODE
+        InGameVideo.instance.skipBtn.SetActive(false);
+#endif
 
 
 
@@ -193,7 +210,7 @@ public class Trig74 : MonoBehaviour
             yield return new WaitForSeconds(3f);
             InGameVideo.instance.StartVideo("TrueEnding");
 
-            yield return new WaitUntil(()=> !InGameVideo.instance.theVideo.isPrepared);
+            yield return new WaitUntil(()=> InGameVideo.instance.theVideo.isPlaying);
             Fade2Manager.instance.FadeIn(0.01f);
 
             yield return new WaitUntil(()=> !InGameVideo.instance.isPlaying);
@@ -277,7 +294,7 @@ public class Trig74 : MonoBehaviour
             
             yield return new WaitForSeconds(1f);
             InGameVideo.instance.StartVideo("Henry");
-            yield return new WaitUntil(()=> !InGameVideo.instance.theVideo.isPrepared);
+            yield return new WaitUntil(()=> InGameVideo.instance.theVideo.isPlaying);
             FadeManager.instance.FadeIn(0.01f);
 
             yield return new WaitUntil(()=> !InGameVideo.instance.isPlaying);
@@ -297,7 +314,7 @@ public class Trig74 : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         InGameVideo.instance.StartVideo("Credit");
-        yield return new WaitUntil(()=> !InGameVideo.instance.theVideo.isPrepared);
+        yield return new WaitUntil(()=> InGameVideo.instance.theVideo.isPlaying);
         FadeManager.instance.FadeIn(0.01f);
 
         yield return new WaitUntil(()=> !InGameVideo.instance.isPlaying);
@@ -311,8 +328,11 @@ public class Trig74 : MonoBehaviour
         //FadeManager.instance.FadeIn(0.1f);
             yield return new WaitForSeconds(1f);
         InGameVideo.instance.StartVideo("LastLogo");
-        yield return new WaitUntil(()=> !InGameVideo.instance.theVideo.isPrepared);
-        FadeManager.instance.FadeIn(0.08f);
+        yield return new WaitUntil(()=> InGameVideo.instance.theVideo.isPlaying);
+        FadeManager.instance.FadeIn(0.01f);
+        // InGameVideo.instance.theVideo.Pause();
+        //     yield return new WaitForSeconds(1f);
+        // InGameVideo.instance.theVideo.Play();
 
         yield return new WaitUntil(()=> !InGameVideo.instance.isPlaying);
         FadeManager.instance.FadeOut(0.01f);

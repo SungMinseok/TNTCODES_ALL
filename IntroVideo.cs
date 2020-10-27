@@ -11,6 +11,7 @@ public class IntroVideo : MonoBehaviour
     public GameObject skipBtn_DEV;
     [Header("0: 도망, 1: 눈")]
     public VideoClip[] videoClips;
+    public RenderTexture texture;
     public bool isPlaying;
     void Start()
     {   
@@ -20,6 +21,8 @@ public class IntroVideo : MonoBehaviour
         else{
             skipBtn.SetActive(false);
         }
+        ClearOutRenderTexture(texture);
+
 #if DEV_MODE
 
         skipBtn_DEV.SetActive(true);
@@ -31,7 +34,7 @@ public class IntroVideo : MonoBehaviour
     IEnumerator Wait(){
         StartVideo(0);
         
-        yield return new WaitUntil(()=> !theVideo.isPrepared);
+        yield return new WaitUntil(()=> theVideo.isPrepared);
         Fade2Manager.instance.FadeIn(0.03f);
 
         yield return new WaitUntil(()=> !isPlaying);
@@ -39,7 +42,7 @@ public class IntroVideo : MonoBehaviour
             yield return new WaitForSeconds(2f);
         StartVideo(1);
         
-        yield return new WaitUntil(()=> !theVideo.isPrepared);
+        yield return new WaitUntil(()=> theVideo.isPrepared);
         Fade2Manager.instance.FadeIn(0.03f);
 
         yield return new WaitUntil(()=> !isPlaying);
@@ -63,6 +66,7 @@ public class IntroVideo : MonoBehaviour
         theVideo.Stop();
         AudioManager.instance.Play("button22");
         SceneManager.LoadScene("start");
+        DatabaseManager.instance.doneIntro = true;
     }
     public void StartVideo(int videoNum)
     {
@@ -75,5 +79,13 @@ public class IntroVideo : MonoBehaviour
     {
         player.Pause();
         isPlaying = false;
+    }
+
+    public void ClearOutRenderTexture(RenderTexture renderTexture)
+    {
+        RenderTexture rt = RenderTexture.active;
+        RenderTexture.active = renderTexture;
+        GL.Clear(true, true, Color.clear);
+        RenderTexture.active = rt;
     }
 }

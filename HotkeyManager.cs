@@ -46,6 +46,7 @@ public class HotkeyManager : MonoBehaviour
         theSL=FindObjectOfType<SaveNLoad>();
 #if DEV_MODE
         isDevMode.SetActive(true);
+        isDevMode.GetComponent<Text>().text += " VER." + Application.version + " " + DebugManager.instance.update;
         playCount.text += DebugManager.playerInfo.count_play;
         clearCount.text += DebugManager.playerInfo.count_clear;
 
@@ -154,6 +155,8 @@ public class HotkeyManager : MonoBehaviour
     void Transportation(string mapName){
         StartCoroutine(TPC(mapName));
         if(mapName!="start") PlayerManager.instance.currentMapName = mapName;
+        PlayerManager.instance.ChangeColor();
+        PlayerManager.instance.CheckPassive();
 //        Debug.Log(mapName);
         // SceneManager.LoadScene(mapName);
         // PlayerManager.instance.debuggingMode = true;

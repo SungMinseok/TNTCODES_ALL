@@ -27,6 +27,7 @@ public class PlayerManager : MovingObject
 
     public bool isGameOver;
     public bool isDemoOver;
+    public bool devMode;
     [HideInInspector]public bool finishGame;
     public bool notMove= true;
     public bool isInteracting=false;  //대화중 메뉴 안켜지게 하려고
@@ -364,12 +365,15 @@ public class PlayerManager : MovingObject
                 break;
             default :
                 spriteRenderer.color = normalColor;
+                //if(animator.GetBool("onFish")){
+                //}
                 break;
         }
     }
 
     public IEnumerator WakingUp(){
         CheckPassive();
+        ChangeColor();
         Fade2Manager.instance.FadeIn(0.01f);
         notMove = true;
 
@@ -381,6 +385,9 @@ public class PlayerManager : MovingObject
             shadow_normal.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.3f);
             animator.SetBool("wake_up",false);
+            shadow_laydown.gameObject.SetActive(false);
+        }
+        else{
             shadow_laydown.gameObject.SetActive(false);
         }
         //CheckPassive();
@@ -484,6 +491,11 @@ public class PlayerManager : MovingObject
         if(currentMapName=="lakein"){
             animator.SetBool("onFish",true);
             ObjectManager.instance.ImageFadeIn(FadeManager.instance.fog0.GetComponent<Image>(),0.015f);
+        }
+        else{
+            
+            animator.SetBool("onFish", false);
+            FadeManager.instance.fog0.SetActive(false);
         }
         if(Inventory.instance.SearchItem(14)){
             life =1;

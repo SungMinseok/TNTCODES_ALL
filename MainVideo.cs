@@ -9,6 +9,7 @@ public class MainVideo : MonoBehaviour
     public VideoPlayer theVideo;
     public Animator animator;
     public int playMusicTrack;
+    public RenderTexture texture;
 
 
 
@@ -16,6 +17,7 @@ public class MainVideo : MonoBehaviour
     void Start()
     {
         menu.SetActive(false);
+        ClearOutRenderTexture(texture);
         //theVideo.Play();
         StartCoroutine(Wait());    
         BGM = FindObjectOfType<BGMManager>();
@@ -28,12 +30,18 @@ public class MainVideo : MonoBehaviour
         // if(MainMenu.instance.logoOn){
         //     MainMenu.instance.logo.SetActive(true);
         //     yield return new WaitForSeconds(5f);
-        // }
+        // }        
+        theVideo.Prepare();
+        WaitForSeconds waitTime = new WaitForSeconds(0.1f);
+        while(!theVideo.isPrepared){
+            yield return waitTime;
+        }
+        //rawImage.GetComponent<RawImage>().texture = texture;
         theVideo.Play();
-        yield return new WaitForSeconds(0.1f);
         BGM.Play(playMusicTrack);
-
-        yield return new WaitForSeconds(4.2f);
+        //yield return new WaitForSeconds(0.1f);
+        yield return new WaitUntil(()=>theVideo.time >= 4f);
+        //yield return new WaitForSeconds(4.2f);
         menu.SetActive(true);
         animator.SetBool("Appear",true);
         //yield return new WaitForSeconds(1.5f);
@@ -43,6 +51,13 @@ public class MainVideo : MonoBehaviour
         // yield return new WaitForSeconds(15f);
         // theVideo.Pause();
         
+    }
+    public void ClearOutRenderTexture(RenderTexture renderTexture)
+    {
+        RenderTexture rt = RenderTexture.active;
+        RenderTexture.active = renderTexture;
+        GL.Clear(true, true, Color.clear);
+        RenderTexture.active = rt;
     }
 
 }

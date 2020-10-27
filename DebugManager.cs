@@ -25,6 +25,8 @@ public class DebugManager : MonoBehaviour
     public bool dobbyIsFree = false;
     //[Header ("버전(저장폴더설정)")]
     //public string ver;
+    [Header ("수정 날짜 (테스트시)")]
+    public string update ;
 
     private PlayerManager thePlayer;
 
@@ -56,7 +58,7 @@ public class DebugManager : MonoBehaviour
         
         #if DEV_MODE
         warningDevMode.SetActive(true);
-        warningDevMode.GetComponent<Text>().text += "VER." + Application.version;
+        warningDevMode.GetComponent<Text>().text += "\nVER." + Application.version + " " + update;
         #endif
     }
 
@@ -384,12 +386,16 @@ public void SavePlayerInfo(){
 
     
 //#else 
-#endif
-#if DEV_MODE
+//#endif
+//#if DEV_MODE
 
     static void Transportation(string mapName){
         DebugManager.instance.StartCoroutine(TPC(mapName));
-        if(mapName!="start") PlayerManager.instance.currentMapName = mapName;
+        if(mapName!="start"){
+            PlayerManager.instance.currentMapName = mapName;
+        PlayerManager.instance.ChangeColor();
+        PlayerManager.instance.CheckPassive();
+        }
         Debug.Log(mapName);
         // SceneManager.LoadScene(mapName);
         // PlayerManager.instance.debuggingMode = true;
