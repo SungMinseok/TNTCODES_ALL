@@ -51,11 +51,8 @@ public class PlayerManager : MovingObject
     public bool isWatching;
     public bool isClimbing;
     public bool isFalling;
-    
-    public bool underDarkness;//어둡게
-    
+    public bool underDarkness;//어둡게    
     public Color shadowColor;
-    
     public Color normalColor;
     public int mazeNum;//미로에서 위치
 
@@ -88,8 +85,6 @@ public class PlayerManager : MovingObject
         theSL = FindObjectOfType<SaveNLoad>();
         theAudio = FindObjectOfType<AudioManager>();
         if(!DebugManager.instance.onDebug) boxCollider.enabled =false;
-        //spriteRenderer = GetComponent<SpriteRenderer>();
-        //queue = new Queue<string>();
         if(instance == null)
         {
             DontDestroyOnLoad(this.gameObject);

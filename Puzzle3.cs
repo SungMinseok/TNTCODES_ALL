@@ -167,7 +167,7 @@ public class Puzzle3 : MonoBehaviour
                 break;
 
         }
-        Invoke("buttonOn",0.501f);
+        Invoke("buttonOn",0.2f);
         //buttonOn(); 
     }
     #endregion

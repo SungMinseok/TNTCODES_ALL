@@ -144,6 +144,11 @@ public class Trig32 : MonoBehaviour
                 fenceOpened.SetActive(true);
             }
         }
+        else if(trigNum==80){
+            if(theDB.trigOverList.Contains(11)){
+                flag = true;
+            }
+        }
 
     }
 
@@ -439,10 +444,15 @@ public class Trig32 : MonoBehaviour
                         
                         theDM.ShowDialogue(dialogue_0);
                         yield return new WaitUntil(()=> !theDM.talking);
-                        //if(trig88.lockedAltar.activeSelf){
-                            trig88.clickable = true;
+
+                        yield return new WaitForSeconds(1f);
+                        theOrder.Turn("Player", "UP");
                             trig88.unlockedAltar.SetActive(true);
                             trig88.lockedAltar.SetActive(false);
+                        theDM.ShowDialogue(dialogue_2);
+                        yield return new WaitUntil(()=> !theDM.talking);
+                        //if(trig88.lockedAltar.activeSelf){
+                            trig88.clickable = true;
                         //}
 
                     }
@@ -548,7 +558,7 @@ public class Trig32 : MonoBehaviour
 
         if(theDB.trigOverList.Contains(86)&&theDB.trigOverList.Contains(87)&&theDB.trigOverList.Contains(88)){
             
-            trig89.flag = true;
+            if(trigNum==88) trig89.flag = true;
         thePlayer.canInteractWith = 0;
             DialogueManager.instance.ShowDialogue(Inventory.instance.checkAllTributes);
             yield return new WaitUntil(()=> !DialogueManager.instance.talking);

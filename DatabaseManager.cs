@@ -100,10 +100,18 @@ public class DatabaseManager : MonoBehaviour{
     void Start()
     {   
         instance =this;
-        
         LocalizeItemNames(GameMultiLang.instance.nowLang);
         //bool[] OnActivated= new bool[itemList.Count+1]; 
     }
+    // void OnGUI(){
+        
+    //     GUI.Box (new Rect (0,0,100,50), "Top-left");
+    //     GUI.Box (new Rect (Screen.width - 100,0,100,50), "Top-right");
+    //     GUI.Box (new Rect (0,Screen.height - 50,100,50), "Bottom-left");
+    //     GUI.Box (new Rect (Screen.width - 100,Screen.height - 50,100,50), "Bottom-right");
+    //     GUI.TextArea(new Rect(100,50,100,30), "Timer : "+Time.time.ToString("N2"));
+
+    // }
 
     void Update(){
         if(BookManager.instance!=null){

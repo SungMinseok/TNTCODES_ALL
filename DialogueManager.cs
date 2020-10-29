@@ -459,6 +459,9 @@ public class DialogueManager : MonoBehaviour        //
                     case "표지판" :
                         dialogue.names[i] = "Sign";
                         break;
+                    case "이름 모를 제단" :
+                        dialogue.names[i] = "Unknown altar";
+                        break;
                 }
             }
 

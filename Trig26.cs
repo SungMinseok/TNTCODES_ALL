@@ -129,7 +129,7 @@ public class Trig26 : MonoBehaviour
         thePlayer.isInteracting = true;
         theOrder.NotMove();  
         theOrder.PreLoadCharacter();  
-        if(turn!="null")      
+        if(turn!="")      
             theOrder.Turn("Player",turn);
                                                //트리거 중 이동불가
 
@@ -185,6 +185,7 @@ public class Trig26 : MonoBehaviour
             bird.SetTrigger("flyaway");
             AudioManager.instance.Play("wing1");
             bird.GetComponent<SpriteRenderer>().flipX = true;
+            birdShadow.gameObject.SetActive(false);
             canMove= true;
             yield return new WaitForSeconds(1.5f);
             ObjectManager.instance.FadeOut(bird.GetComponent<SpriteRenderer>());
@@ -211,6 +212,7 @@ public class Trig26 : MonoBehaviour
             yield return new WaitUntil(()=> !theDM.talking);
         }
         else if(trigNum==60){
+            theOrder.Turn("Player","RIGHT");
             bird.transform.position = moveLocation_Eat.position;
             bird.GetComponent<PositionRendererSorter>().offset = 2;
             

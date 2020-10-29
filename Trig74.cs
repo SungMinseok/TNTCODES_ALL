@@ -157,6 +157,7 @@ public class Trig74 : MonoBehaviour
         for(int j=0; j<3; j++){
             yield return new WaitForSeconds(1f);
             for(int i=0; i<2; i++){
+        AudioManager.instance.Play("air0");
                 ObjectManager.instance.ImageFadeOut(PaperManager.instance.paperBundle[2*j+i].GetComponent<Image>(),0.01f);
                 ObjectManager.instance.ImageFadeIn(PaperManager.instance.paperUnlocked[2*j+i].GetComponent<Image>(),0.01f);
                 ObjectManager.instance.TextFadeIn(PaperManager.instance.textUnlocked[2*j+i],0.01f);
@@ -200,7 +201,7 @@ public class Trig74 : MonoBehaviour
 
 #region (영상) 진엔딩 언노운
         if(PaperManager.instance.letter0.activeSelf&&PaperManager.instance.letter1.activeSelf){
-            
+            BGMManager.instance.FadeOutMusic();
             Fade2Manager.instance.FadeOut(0.02f);
             yield return new WaitForSeconds(2f);
             BookManager.instance.BookOff();

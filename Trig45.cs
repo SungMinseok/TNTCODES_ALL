@@ -170,7 +170,7 @@ public class Trig45 : MonoBehaviour
                     theSelect.ShowSelect(select_0);
                     yield return new WaitUntil(()=> !theSelect.selecting);
                     if(theSelect.GetResult()==0){
-                        ObjectManager.instance.FadeIn(activatedHandle);
+                        ObjectManager.instance.FadeIn(activatedHandle,0.015f);
                         AudioManager.instance.Play("machine1");
                         yield return new WaitForSeconds(4f);
                         //ObjectManager.instance.FadeOut(defaultHandle);

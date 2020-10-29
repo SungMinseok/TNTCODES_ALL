@@ -187,7 +187,7 @@ public class Puzzle0 : MonoBehaviour
             theDM.ShowDialogue(dialogue);
             yield return new WaitUntil(()=> !theDM.talking);
         }                    //대화 끝날 때까지 대기 (마지막 제외 필수)
-        Invoke("buttonOn",0.51f);
+        Invoke("buttonOn",0.2f);
     }
     IEnumerator EventCoroutine2(Dialogue dialogue){
 
@@ -207,7 +207,7 @@ public class Puzzle0 : MonoBehaviour
        // Debug.Log("3번?");
 
         leaf.SetActive(false);
-        Invoke("buttonOn",0.51f);
+        Invoke("buttonOn",0.2f);
     }
     IEnumerator Broken(){   //쓰러진 꽃 터치 > 심어줄까 > 게임or바로심어지기
 
@@ -216,7 +216,7 @@ public class Puzzle0 : MonoBehaviour
             CursorManager.instance.RecoverCursor();
             theDM.ShowDialogue(Inventory.instance.wrongUse);
             yield return new WaitUntil(()=> !theDM.talking);
-            Invoke("buttonOn",0.51f);
+            Invoke("buttonOn",0.2f);
         }
         else{
             theSelect.ShowSelect(select_1);       //심어줄까?
@@ -243,7 +243,7 @@ public class Puzzle0 : MonoBehaviour
             else if(theSelect.GetResult()==1){      //아니
                 theDM.ShowDialogue(dialogue_3);
                 yield return new WaitUntil(()=> !theDM.talking);
-        Invoke("buttonOn",0.51f);
+        Invoke("buttonOn",0.2f);
             }
 
         }
@@ -273,7 +273,7 @@ public class Puzzle0 : MonoBehaviour
         //     broken.SetActive(true);
         //     afterfixed.SetActive(false);
         // }
-        Invoke("buttonOn",0.51f);
+        Invoke("buttonOn",0.2f);
     }
     public IEnumerator Fixed(){ //심은 꽃 터치
         buttonOff();
@@ -323,7 +323,7 @@ public class Puzzle0 : MonoBehaviour
 
 
 
-        Invoke("buttonOn",0.51f);
+        Invoke("buttonOn",0.2f);
     }
 
 
@@ -378,7 +378,7 @@ public class Puzzle0 : MonoBehaviour
             theOrder.Move();
             Inventory.instance.RemoveItem(2);
 
-        Invoke("buttonOn",0.51f);
+        Invoke("buttonOn",0.2f);
 
         }
         else{                                                         //사탕 없으면 다쉬
@@ -424,7 +424,7 @@ public class Puzzle0 : MonoBehaviour
             theDM.ShowDialogue(dialogue_10);
             yield return new WaitUntil(()=> !theDM.talking);
         }
-        Invoke("buttonOn",0.51f);
+        Invoke("buttonOn",0.2f);
     }
 
 

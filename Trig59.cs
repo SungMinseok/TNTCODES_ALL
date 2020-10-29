@@ -137,7 +137,7 @@ public class Trig59 : MonoBehaviour
 
         theOrder.NotMove();  
         theOrder.PreLoadCharacter();  
-        if(turn!="null")      
+        if(turn!="")      
             theOrder.Turn("Player",turn);
                                                //트리거 중 이동불가
 
@@ -162,12 +162,12 @@ public class Trig59 : MonoBehaviour
                 GameManager.instance.game19.SetActive(true);
                 thePlayer.isPlayingGame = true;            
                 Fade2Manager.instance.FadeIn();
-        theCamera.GetComponent<CameraMovement>().target=thePlayer.gameObject;
         //theCamera.GetComponent<CameraMovement>().moveSpeed=5f; 
             }
             else{
                 thePlayer.notMove= false;
             }
+        theCamera.GetComponent<CameraMovement>().target=thePlayer.gameObject;
             //trig40.SetActive(true);
         }
         else{

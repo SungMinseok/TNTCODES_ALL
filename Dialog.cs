@@ -8,10 +8,10 @@ public class Dialogue
     public string[] names;
 
     
-[Header("------------------------------------------------------------------|")]
+[Header("------------------------------------------------------------------|<color=red></color>")]
     [TextArea(1,2)]
     public string[] sentences ;
-[Header("------------------------------------------------------------------|")]
+[Header("------------------------------------------------------------------|<color=red></color>")]
     [TextArea(1,2)]
     public string[] sentences_en = {""};
     [HideInInspector]

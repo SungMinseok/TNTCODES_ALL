@@ -83,7 +83,7 @@ public class Trig38 : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision){
         //if(theDB.trigOverList.Contains(24)&&!GameManager.instance.playing&&!theDB.gameOverList.Contains(6)){
 
-        if(!theDB.gameOverList.Contains(18)&&!thePlayer.isPlayingGame){
+        if(!theDB.gameOverList.Contains(18)&&!thePlayer.isPlayingGame&&(thePlayer.canInteractWith==0||thePlayer.canInteractWith==trigNum)){
 
     
             if(!thePlayer.exc.GetBool("on")&&!flag){
@@ -128,7 +128,7 @@ public class Trig38 : MonoBehaviour
             theDM.ShowDialogue(dialogue_0);
             yield return new WaitUntil(()=> !theDM.talking);
                     Fade2Manager.instance.FadeOut();
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1.5f);
             GameManager.instance.game18.SetActive(true);
                 yield return new WaitForSeconds(0.1f);  
                 GameManager.instance.game18.GetComponent<game18>().ResetGame();
@@ -157,6 +157,7 @@ public class Trig38 : MonoBehaviour
 
     public IEnumerator FinishGame(){
         
+        thePlayer.exc.SetBool("on",false);
             theDM.ShowDialogue(dialogue_1);
             yield return new WaitUntil(()=> !theDM.talking);
             PaperManager.instance.letter1.gameObject.SetActive(true);

@@ -65,6 +65,7 @@ public class Trig_GetItem : MonoBehaviour
         theCamera = CameraMovement.instance;
         theMap= MapManager.instance;
         thePuzzle= PuzzleManager.instance;
+        item = this.gameObject;
 
         if(mapNum==0) mapNum = -1;
         if(mapCount==0) mapCount = -1;
@@ -78,7 +79,7 @@ public class Trig_GetItem : MonoBehaviour
         }
 
         if(onlyOnce){
-            if(mapNum == -1 || !theDB.itemOverList.Contains(itemNum)&&MapCountCheck()){
+            if(!theDB.itemOverList.Contains(itemNum)&&MapCountCheck()){
                 gameObject.SetActive(true);
             }
             else{
@@ -158,7 +159,7 @@ public class Trig_GetItem : MonoBehaviour
     }
     //출현 카운트 횟수만족시 true
     public bool MapCountCheck(){
-        if(thePlayer.mapCheckList[mapNum]>=mapCount){
+        if(mapNum==-1||thePlayer.mapCheckList[mapNum]>=mapCount){
             return true;
         }
         else{

@@ -174,7 +174,7 @@ public class UnknownManager : MonoBehaviour
             for(int j=0; j<phases[i].maps.Length; j++){
                 if(thePlayer.currentMapName==phases[i].maps[j]){
                     //activateRandomAppear = true;
-                    activateRandomAppear = true;
+                    if(DatabaseManager.instance.trigOverList.Contains(22)) activateRandomAppear = true;
 //                    Debug.Log("zzz");
                     return i;
                 }

@@ -20,19 +20,19 @@ public class InteractableArea : MonoBehaviour, IPointerEnterHandler, IPointerExi
     }
     public void OnPointerEnter (PointerEventData eventData) 
     {
-        Debug.Log("OnMouseEnter : "+gameObject.name);
+//        Debug.Log("OnMouseEnter : "+gameObject.name);
         CursorManager.instance.interactable = true;
     }
     public void OnPointerExit (PointerEventData eventData) 
     {
-        Debug.Log("OnMouseExit : "+gameObject.name);
+//        Debug.Log("OnMouseExit : "+gameObject.name);
         CursorManager.instance.interactable = false;
     }
     public void OnPointerUp (PointerEventData eventData) 
     {
         if(forcedOff){
             
-        Debug.Log("OnPointerUp : "+gameObject.name);
+ //       Debug.Log("OnPointerUp : "+gameObject.name);
         CursorManager.instance.interactable = false;
         }
     }

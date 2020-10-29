@@ -502,7 +502,7 @@ public class Puzzle2 : MonoBehaviour
                 break;
         }
         //buttonOn(); 
-        Invoke("buttonOn",0.51f);
+        Invoke("buttonOn",0.2f);
     }
     #endregion
     

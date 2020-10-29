@@ -79,12 +79,12 @@ public class ObjectManager : MonoBehaviour
         //ResetColor();
         //fadeFlag = false;
     }
-    public void FadeIn(SpriteRenderer sprite){
+    public void FadeIn(SpriteRenderer sprite, float speed = 0.03f){
 
-        StartCoroutine(FadeInCoroutine(sprite));
+        StartCoroutine(FadeInCoroutine(sprite, speed));
         
     }
-    public IEnumerator FadeInCoroutine(SpriteRenderer sprite){
+    public IEnumerator FadeInCoroutine(SpriteRenderer sprite, float speed){
         
         color4.a = 0f;
         sprite.color = color4; 
@@ -98,7 +98,7 @@ public class ObjectManager : MonoBehaviour
             
             else {
                 
-                color4.a += 0.03f;
+                color4.a += speed;
                 sprite.color = color4;
                 yield return wait01;
             }

@@ -153,7 +153,7 @@ public class Puzzle1 : MonoBehaviour
         yield return new WaitUntil(()=> !theDM.talking);                    //대화 끝날 때까지 대기 (마지막 제외 필수)
         
         
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
     }
     public void TalkFace(){
         
@@ -187,7 +187,7 @@ public class Puzzle1 : MonoBehaviour
         theDB.doorEnabledList.Add(10);
         theDB.doorEnabledList.Add(11);
         theDB.doorEnabledList.Add(12);
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
     }
 
     public void HangBulb(){
@@ -223,7 +223,7 @@ public class Puzzle1 : MonoBehaviour
             buttonOff();      
             StartCoroutine(EventCoroutine8(dialogue_8));
 
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
 
         }
         else if(theDB.OnActivated[0]){
@@ -238,7 +238,7 @@ public class Puzzle1 : MonoBehaviour
         yield return new WaitUntil(()=> !theDM.talking);                    //대화 끝날 때까지 대기 (마지막 제외 필수)
         
         
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
     }
     IEnumerator EventCoroutine8(Dialogue dialogue){
         //thePlayer.notMove = true;
@@ -247,7 +247,7 @@ public class Puzzle1 : MonoBehaviour
         yield return new WaitUntil(()=> !theDM.talking);                    //대화 끝날 때까지 대기 (마지막 제외 필수)
         
         
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
     }
     public void GiveAsh(){  //게임3끝
         if(theDB.OnActivated[5]){
@@ -263,6 +263,7 @@ public class Puzzle1 : MonoBehaviour
             //happyFace.SetActive(true);
             //bulb.SetActive(true);
             //theDB.trigOverList.Add(19);
+            AudioManager.instance.Play("getitem0");
         
             
             CursorManager.instance.RecoverCursor();
@@ -284,7 +285,7 @@ public class Puzzle1 : MonoBehaviour
         
         //theDB.puzzleOverList.Add(1);   
         
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
     }
     public void FinishGame(){   //게임2끝
         StartCoroutine(EventCoroutine5(dialogue_5));
@@ -304,7 +305,7 @@ public class Puzzle1 : MonoBehaviour
         theDB.doorEnabledList.Add(13);
         //theDB.puzzleOverList.Add(1);   
         
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
     }
     public void GetHint(){
         StartCoroutine(EventCoroutine6(dialogue_6));
@@ -318,7 +319,7 @@ public class Puzzle1 : MonoBehaviour
         //theDB.puzzleOverList.Add(1);   
         
         //buttonOn();
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
     }
     public void TouchRope(){
         StartCoroutine(EventCoroutine7(dialogue_7));
@@ -331,7 +332,7 @@ public class Puzzle1 : MonoBehaviour
         
         //theDB.puzzleOverList.Add(1);   
         
-        Invoke("buttonOn",0.51f); 
+        Invoke("buttonOn",0.2f); 
     }
     public void TouchFace(){
         Trig21.instance.StartCoroutine("EventCoroutine");

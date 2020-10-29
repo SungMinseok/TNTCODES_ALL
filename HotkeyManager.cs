@@ -12,6 +12,7 @@ public class HotkeyManager : MonoBehaviour
     private DatabaseManager theDB;
     private PlayerManager thePlayer;
     public GameObject manual;
+    public GameObject makerInfo;
     public GameObject redAlert;
     public GameObject devMode;
     public GameObject isDevMode;
@@ -85,6 +86,7 @@ public class HotkeyManager : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.Escape)){
                 if(manual.activeSelf) PopUpHelp();
+                else if(makerInfo.activeSelf) makerInfo.SetActive(false);
                 else if(!theBook.book.activeSelf) theBook.BookOn();
                 else if(theBook.setting.activeSelf) theBook.BookOff();
                 theBook.OnSetting();

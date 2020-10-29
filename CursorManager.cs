@@ -23,7 +23,9 @@ public class CursorManager : MonoBehaviour
         QualitySettings.vSyncCount = 0;
 
         Application.targetFrameRate = 30;
-
+#if !UNITY_EDITOR
+        SetCursorState(2);
+#endif
     }
     
     public Texture2D defaultCursor;
@@ -104,6 +106,18 @@ public class CursorManager : MonoBehaviour
         Cursor.SetCursor(ct, Vector2.zero, CursorMode.ForceSoftware);
 
         //Debug.Log("마우스커서 복구");
+    }
+    public void SetCursorState(int num){
+        if(num==0){//커서 정상
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else if(num==1){//커서 숨김
+            Cursor.lockState = CursorLockMode.Locked;
+
+        }
+        else{//밖으로 못나가게
+            Cursor.lockState = CursorLockMode.Confined;
+        }
     }
     /*
     public void CursorWait(){

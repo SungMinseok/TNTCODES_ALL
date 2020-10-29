@@ -7,7 +7,7 @@ public class MainVideo : MonoBehaviour
     // Start is called before the first frame up
     public GameObject menu;
     public VideoPlayer theVideo;
-    public Animator animator;
+    //public Animator animator;
     public int playMusicTrack;
     public RenderTexture texture;
 
@@ -26,11 +26,6 @@ public class MainVideo : MonoBehaviour
 
     IEnumerator Wait(){
         yield return new WaitForSeconds(0.01f);
-        //Fade2Manager.instance.FadeIn(0.01f);
-        // if(MainMenu.instance.logoOn){
-        //     MainMenu.instance.logo.SetActive(true);
-        //     yield return new WaitForSeconds(5f);
-        // }        
         theVideo.Prepare();
         WaitForSeconds waitTime = new WaitForSeconds(0.1f);
         while(!theVideo.isPrepared){
@@ -43,7 +38,7 @@ public class MainVideo : MonoBehaviour
         yield return new WaitUntil(()=>theVideo.time >= 4f);
         //yield return new WaitForSeconds(4.2f);
         menu.SetActive(true);
-        animator.SetBool("Appear",true);
+        //animator.SetBool("Appear",true);
         //yield return new WaitForSeconds(1.5f);
         
         //animator.SetBool("Swing",true);

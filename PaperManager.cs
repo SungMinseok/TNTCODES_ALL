@@ -342,6 +342,7 @@ public class PaperManager : MonoBehaviour
                 // letter1.GetComponent<Animator>().SetBool("appear", false);
                 // letter0.GetComponent<Animator>().SetBool("appear", false);
 
+        AudioManager.instance.Play("air0");
         letterBG.SetActive(true);
         switch(num){
             case 0:
