@@ -402,6 +402,22 @@ public class Inventory : MonoBehaviour
         //CursorManager.instance.RecoverCursor(); 이거 빼서 아이템 착용한채로 여러군데 눌러 볼수 있게.
         DialogueManager.instance.ShowDialogue(wrongUse);
         yield return new WaitUntil(()=> !DialogueManager.instance.talking);
+
+        if(PuzzleManager.instance.puzzleNum[0].activeSelf){
+            Puzzle0.instance.BtnOnAccess();
+        }
+        else if(PuzzleManager.instance.puzzleNum[1].activeSelf){
+
+            Puzzle1.instance.BtnOnAccess();
+        }
+        else if(PuzzleManager.instance.puzzleNum[2].activeSelf){
+
+            Puzzle2.instance.BtnOnAccess();
+        }
+        else if(PuzzleManager.instance.puzzleNum[3].activeSelf){
+
+            Puzzle3.instance.BtnOnAccess();
+        }
     }
 
     public void ApplyExpiration(){

@@ -110,7 +110,9 @@ public class Puzzle0 : MonoBehaviour
         
 
     }
-
+    public void BtnOnAccess(){
+        Invoke("buttonOn",0.2f);
+    }
     public void buttonOn(){
         for(int i =0 ; i<buttons.Length; i++){                  //트리거 후 버튼 활성화
             buttons[i].GetComponent<Button>().interactable = true;

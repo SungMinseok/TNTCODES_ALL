@@ -15,6 +15,8 @@ public class Trig74 : MonoBehaviour
     public Dialogue dialogue_0;
     [Header ("다리 통과 후 대사")]
     public Dialogue dialogue_1;
+    [Header ("눈감고 대사")]
+    public Dialogue dialogue_2;
     
     public bool moveFlag ;
     //public bool animFlag;
@@ -150,6 +152,7 @@ public class Trig74 : MonoBehaviour
         theDB.bookActivated = false;
         BookManager.instance.onButton.SetActive(false);
         thePlayer.notMove = true;
+        PaperManager.instance.blurAnim = false;
 #if DEV_MODE
         InGameVideo.instance.skipBtn.SetActive(true);
 #endif
@@ -245,9 +248,15 @@ public class Trig74 : MonoBehaviour
             yield return new WaitForSeconds(4f);
 
     //눈 감는 애니메이션 후 다리 중간까지 이동.
-            thePlayer.animator.SetTrigger("close_eye");
-            yield return new WaitForSeconds(2.3f);
+            //thePlayer.animator.SetTrigger("close_eye");
+            //yield return new WaitForSeconds(2.3f);
+            thePlayer.animator.SetBool("close_eye_bool", true);
+            yield return new WaitForSeconds(1f);
 
+            theDM.ShowDialogue(dialogue_2);
+            yield return new WaitUntil(()=> !theDM.talking);
+            thePlayer.animator.SetBool("close_eye_bool", false);
+            yield return new WaitForSeconds(0.583f);
             rubyMove[0] = true;
             yield return new WaitUntil(()=> !rubyMove[0]);
 
