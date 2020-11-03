@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class game0 : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class game0 : MonoBehaviour
     private PlayerManager thePlayer;
     public Puzzle0 thePuzzle;
     public int[] checkValue;
+    public GameObject counter;
+    public Text countText;
+    public int count;
     // Start is called before the first frame update
     void Start()                //퍼즐 랜덤위치로 돌려주자
     {
@@ -28,6 +32,13 @@ public class game0 : MonoBehaviour
         
 
     }
+    void OnEnable(){
+#if ADD_ACH
+        counter.SetActive(true);
+        count = 0;
+        countText.text = "0";
+#endif
+    }
     public void GoRandom(){
         
         AudioManager.instance.Play("puzzle0");
@@ -36,11 +47,19 @@ public class game0 : MonoBehaviour
             puzzles[i].realRotation = 90f*(float)ranNum;
             puzzles[i].value = ranNum;
         }
+#if ADD_ACH
+        count = 0;
+        countText.text = "0";
+#endif
     }
 
     // Update is called once per frame
     public void checkGame()
     {
+#if ADD_ACH
+        count ++;
+        countText.text = count.ToString();
+#endif
         for(int i=0; i<puzzles.Length; i++){
             
             AudioManager.instance.Play("puzzle0");
@@ -64,6 +83,14 @@ public class game0 : MonoBehaviour
             // thePuzzle.buttonOn();
 
 
+#if ADD_ACH
+            if(count<=32){
+                
+            Debug.Log("업적");
+            
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(9);
+            }
+#endif
 
             // 
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class game6 : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class game6 : MonoBehaviour
     private DatabaseManager theDB;
     private GameManager theGame;
     private PlayerManager thePlayer;
+    public GameObject counter;
+    public Text countText;
+    public int count;
     void Awake()
     {
         instance = this;
@@ -23,6 +27,13 @@ public class game6 : MonoBehaviour
         //Debug.Log("가능?");
         //DisableColliders();
         thePlayer.isPlayingGame = true;
+    }
+    void OnEnable(){
+#if ADD_ACH
+        counter.SetActive(true);
+        count = 0;
+        countText.text = "0";
+#endif
     }
 
     public void exitGame(){
@@ -37,6 +48,14 @@ public class game6 : MonoBehaviour
     }
     public void passGame(){
 
+#if ADD_ACH
+            if(count<=13){
+                
+            Debug.Log("업적");
+            
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(14);
+            }
+#endif
         //Puzzle1.buttonOn();
         
         theDB.gameOverList.Add(6);
@@ -55,6 +74,10 @@ public class game6 : MonoBehaviour
         //Puzzle1.FinishGame();
     }
     public void ResetGame(){
+#if ADD_ACH
+        count = 0;
+        countText.text = "0";
+#endif
             AudioManager.instance.Play("button20");
         for(int i=0;i<11;i++){
             blocks[i].GetComponent<Ray>().ResetPos();

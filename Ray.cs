@@ -26,7 +26,12 @@ public class Ray : MonoBehaviour
     public void MoveCheck(){
         if(this.gameObject.name == "MainBlock") AudioManager.instance.Play("boosruck");
         else AudioManager.instance.Play("wood"+Random.Range(0,2).ToString());
-        
+#if ADD_ACH
+        if(this.gameObject.name != "MainBlock"){ 
+            game6.instance.count++;
+            game6.instance.countText.text = game6.instance.count.ToString();
+        }
+#endif
         my_collider.enabled = false;
 
         if(movingX){    

@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum InteractableType
+{
+    CursorAccess,
+    UIBtn,
+}
+
+
 //[RequireComponent(typeof(BoxCollider2D))]
 public class InteractableArea : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler//,IPointerHandler
-{
-    //BoxCollider2D box;
-    //RectTransform rect;
+{    
+    [SerializeField]
+    public InteractableType type;
     [Header ("클릭시 이미지 사라지면 true")]
     public bool forcedOff;//클릭시 이미지가 사라지는 경우에 true해줌.
     void Start(){
@@ -18,22 +25,49 @@ public class InteractableArea : MonoBehaviour, IPointerEnterHandler, IPointerExi
         // }
         // box.isTrigger = true;
     }
+    // public InteractableType CheckType()
+    // {
+    //     switch (type)
+    //     {
+    //         case InteractableType.CursorAccess:
+    //             break;
+
+    //         case InteractableType.UIBtn:
+    //             break;
+
+    //         default:
+    //             break;
+    //     }
+    //     return type;
+    // }
     public void OnPointerEnter (PointerEventData eventData) 
     {
 //        Debug.Log("OnMouseEnter : "+gameObject.name);
-        CursorManager.instance.interactable = true;
+        if(type==InteractableType.CursorAccess){
+
+            CursorManager.instance.interactable = true;
+        }
+        else if(type==InteractableType.UIBtn){
+            AudioManager.instance.Play("button20");
+        }
     }
     public void OnPointerExit (PointerEventData eventData) 
     {
 //        Debug.Log("OnMouseExit : "+gameObject.name);
-        CursorManager.instance.interactable = false;
+        if(type==InteractableType.CursorAccess){
+
+            CursorManager.instance.interactable = false;
+        }
     }
     public void OnPointerUp (PointerEventData eventData) 
     {
-        if(forcedOff){
-            
- //       Debug.Log("OnPointerUp : "+gameObject.name);
-        CursorManager.instance.interactable = false;
+        if(type==InteractableType.CursorAccess){
+
+            if(forcedOff){
+                
+    //       Debug.Log("OnPointerUp : "+gameObject.name);
+            CursorManager.instance.interactable = false;
+            }
         }
     }
     // void OnMouseEnter(){

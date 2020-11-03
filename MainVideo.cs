@@ -21,7 +21,7 @@ public class MainVideo : MonoBehaviour
         //theVideo.Play();
         StartCoroutine(Wait());    
         BGM = FindObjectOfType<BGMManager>();
-
+        
     }
 
     IEnumerator Wait(){
@@ -36,6 +36,8 @@ public class MainVideo : MonoBehaviour
         BGM.Play(playMusicTrack);
         //yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(()=>theVideo.time >= 4f);
+        
+        //CursorManager.instance.SetCursorState(2);
         //yield return new WaitForSeconds(4.2f);
         menu.SetActive(true);
         //animator.SetBool("Appear",true);

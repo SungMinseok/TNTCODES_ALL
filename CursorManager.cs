@@ -49,6 +49,7 @@ public class CursorManager : MonoBehaviour
         _default = true;
         //Cursor.visible =false;
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
+        //SetCursorState(1);
     }
 
     void Update(){

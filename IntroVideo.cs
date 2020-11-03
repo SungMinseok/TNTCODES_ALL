@@ -13,9 +13,10 @@ public class IntroVideo : MonoBehaviour
     public VideoClip[] videoClips;
     public RenderTexture texture;
     public bool isPlaying;
-    void Start()
+    void Start()//&&DebugManager.playerInfo.count_clear>=1
     {   
-        if(DebugManager.instance!=null&&DebugManager.playerInfo.count_clear>=1){
+        if(DebugManager.instance!=null&&DebugManager.instance.playerInfo.count_clear>=1){
+            //Debug.Log(DebugManager.instance.playerInfo.count_clear);
             skipBtn.SetActive(true);
         }
         else{

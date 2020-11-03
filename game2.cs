@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class game2 : MonoBehaviour
@@ -13,6 +14,9 @@ public class game2 : MonoBehaviour
     private DatabaseManager theDB;
     private PuzzleManager thePuzzle;
     private PlayerManager thePlayer;
+    public GameObject counter;
+    public Text countText;
+    public float count;
     void Start()               
     {
         //instance = this;
@@ -24,6 +28,13 @@ public class game2 : MonoBehaviour
 
         thePlayer.isPlayingGame = true;
 
+    }
+    void OnEnable(){
+#if ADD_ACH
+        counter.SetActive(true);
+        count = 0;
+        countText.text = "0";
+#endif
     }
     public void exitGame(){
         Puzzle1.instance.inMain = true;
@@ -40,6 +51,14 @@ public class game2 : MonoBehaviour
         Puzzle1.instance.inMain = true;
         Puzzle1.buttonOn();
         //thePuzzle.treeFace.SetActive(true);
+#if ADD_ACH
+            if(count<=12){
+                
+            Debug.Log("업적");
+            
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(11);
+            }
+#endif
         
         gameObject.SetActive(false);
             thePlayer.isPlayingGame = false;
@@ -52,6 +71,10 @@ public class game2 : MonoBehaviour
         Puzzle1.FinishGame();
     }
     public void ResetGame(){
+#if ADD_ACH
+        count = 0;
+        countText.text = "0";
+#endif
             AudioManager.instance.Play("button20");
         for(int i=0;i<control.blocks.Length;i++){
             control.blocks[i].enabled = true;
@@ -72,4 +95,11 @@ public class game2 : MonoBehaviour
             }
         }
     }
+        
+#if ADD_ACH
+    void FixedUpdate(){
+        count += Time.deltaTime;
+        countText.text = count.ToString("N0");
+    }
+#endif
 }

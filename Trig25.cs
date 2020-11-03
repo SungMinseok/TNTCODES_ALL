@@ -113,7 +113,7 @@ public class Trig25 : MonoBehaviour
 
         if(theSelect.GetResult()==0){//게임 on
             Fade2Manager.instance.FadeOut();
-            yield return new WaitForSeconds(1f);            
+            yield return new WaitForSeconds(1.5f);            
             GameManager.instance.game6.SetActive(true);
                 yield return new WaitForSeconds(0.1f);  
                 GameManager.instance.game6.GetComponent<game6>().ResetGame();

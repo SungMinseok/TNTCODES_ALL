@@ -163,9 +163,19 @@ public class Trig59 : MonoBehaviour
                 thePlayer.isPlayingGame = true;            
                 Fade2Manager.instance.FadeIn();
         //theCamera.GetComponent<CameraMovement>().moveSpeed=5f; 
+                if(onlyOnce)
+                    theDB.trigOverList.Add(trigNum);
+                if(preserveTrigger)
+                    flag=false;
+                if(repeatBifur!=0){
+                    theDB.trigOverList.Add(trigNum);
+                    flag=false;
+                    bifur=repeatBifur;
+                }
             }
             else{
                 thePlayer.notMove= false;
+                    flag=false;
             }
         theCamera.GetComponent<CameraMovement>().target=thePlayer.gameObject;
             //trig40.SetActive(true);
@@ -176,6 +186,15 @@ public class Trig59 : MonoBehaviour
             GameManager.instance.game19.SetActive(true);
             thePlayer.isPlayingGame = true;            
             Fade2Manager.instance.FadeIn();
+                if(onlyOnce)
+                    theDB.trigOverList.Add(trigNum);
+                if(preserveTrigger)
+                    flag=false;
+                if(repeatBifur!=0){
+                    theDB.trigOverList.Add(trigNum);
+                    flag=false;
+                    bifur=repeatBifur;
+                }
 
             // theSelect.ShowSelect(select_0);
             // yield return new WaitUntil(()=> !theSelect.selecting);
@@ -206,15 +225,6 @@ public class Trig59 : MonoBehaviour
         //theOrder.Move(); 
             
 
-        if(onlyOnce)
-            theDB.trigOverList.Add(trigNum);
-        if(preserveTrigger)
-            flag=false;
-        if(repeatBifur!=0){
-            theDB.trigOverList.Add(trigNum);
-            flag=false;
-            bifur=repeatBifur;
-        }
     }
 
     // public IEnumerator FinishGame(){

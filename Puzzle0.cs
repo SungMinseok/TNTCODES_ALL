@@ -51,6 +51,7 @@ public class Puzzle0 : MonoBehaviour
     private CameraMovement theCamera;
     private PuzzleManager thePuzzle;
     private GameManager theGame;
+    public bool[] talkCount;
 
     void Start()                                                            //Don't Touch
     {
@@ -67,6 +68,7 @@ public class Puzzle0 : MonoBehaviour
         theGame= GameManager.instance;
 
         thePlayer.isPlayingPuzzle = true;
+        talkCount = new bool[3]{false,false,false};
     }
     void OnEnable(){
         //초기화
@@ -127,6 +129,10 @@ public class Puzzle0 : MonoBehaviour
     // Update is called once per frame
     public void dialogueStart_1()
     {
+        if(!talkCount[0]){
+            talkCount[0] = true;
+            TalkCheck();
+        }
         //if(CursorManager.instance._default){
             //OnActivatedReset();
             StartCoroutine(EventCoroutine1(dialogue_1));
@@ -155,6 +161,10 @@ public class Puzzle0 : MonoBehaviour
     {
         //if(CursorManager.instance._default){
 
+        if(!talkCount[1]){
+            talkCount[1] = true;
+            TalkCheck();
+        }
             //OnActivatedReset();
             StartCoroutine(EventCoroutine1(dialogue_11));
             buttonOff();
@@ -176,6 +186,10 @@ public class Puzzle0 : MonoBehaviour
         //}
     }
     public void SelectFixed(){
+        if(!talkCount[2]){
+            talkCount[2] = true;
+            TalkCheck();
+        }
         StartCoroutine(Fixed());
     }
     IEnumerator EventCoroutine1(Dialogue dialogue){
@@ -472,5 +486,16 @@ public class Puzzle0 : MonoBehaviour
                 temp.enabled = true;
             }
         }
+    }
+    void TalkCheck(){
+
+#if ADD_ACH
+        if(!theDB.gameOverList.Contains(27)&&talkCount[0]&&talkCount[1]&&talkCount[2]){
+            theDB.gameOverList.Add(27);
+            Debug.Log("업적");
+            
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(10);
+        }
+#endif
     }
 }

@@ -52,6 +52,14 @@ public class game24 : MonoBehaviour
         thePlayer.isPlayingGame = false;
     }
     public void PassGame(){
+#if ADD_ACH
+            if(!theDB.gameOverList.Contains(25)){
+                
+            Debug.Log("업적");
+            
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(19);
+            }
+#endif
         
         Puzzle3.instance.inMain = true;
         thePlayer.isPlayingGame = false;

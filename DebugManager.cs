@@ -37,7 +37,8 @@ public class DebugManager : MonoBehaviour
         public int count_play;
         public int count_clear;
     }
-    public static PlayerInfo playerInfo;
+    [SerializeField]
+    public PlayerInfo playerInfo;
     public PlayerInfo playerInfoTemp;
     void Start(){
         if(instance == null)
