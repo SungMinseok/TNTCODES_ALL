@@ -212,9 +212,10 @@ public class Trig26 : MonoBehaviour
             yield return new WaitUntil(()=> !theDM.talking);
         }
         else if(trigNum==60){
+            thePlayer.transform.position = moveLocation_Ruby.position;
             theOrder.Turn("Player","RIGHT");
             bird.transform.position = moveLocation_Eat.position;
-            bird.GetComponent<PositionRendererSorter>().offset = 2;
+            //bird.GetComponent<PositionRendererSorter>().offset = 2;
             
             yield return new WaitForSeconds(0.2f);
 
@@ -228,6 +229,7 @@ public class Trig26 : MonoBehaviour
             yield return new WaitUntil(()=> !theDM.talking);
 
             bird.GetComponent<PositionRendererSorter>().offset = -1;
+            birdShadow.gameObject.SetActive(false);
             bird.SetTrigger("flyaway");
             AudioManager.instance.Play("wing1");
             bird.GetComponent<SpriteRenderer>().flipX = true;

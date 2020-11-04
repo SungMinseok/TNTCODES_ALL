@@ -66,7 +66,7 @@ public class game17 : MonoBehaviour
             AudioManager.instance.Play("bolt0");
             //passGame();
             AudioManager.instance.Play("success0");
-            StartCoroutine(GameManager.instance.GameSuccess());
+            GameManager.instance.GameSuccessTrig();
             Invoke("passGame",GameManager.instance.successWaitTime);
         }
         else answerCheck = "";

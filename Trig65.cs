@@ -142,7 +142,7 @@ public class Trig65 : MonoBehaviour
                     SceneManager.LoadScene("lakeout"); 
                 }
                 //yield return new WaitForSeconds(0.5f);
-                theFade.FadeIn();
+                theFade.FadeIn(0.02f);
                 AudioManager.instance.Play("water2");
                 theOrder.Move();
                 //yield return new WaitForSeconds(1f);

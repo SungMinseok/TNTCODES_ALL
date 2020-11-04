@@ -87,6 +87,10 @@ public class Trig45 : MonoBehaviour
             opened.SetActive(true);
         }
 
+        if(trigNum==50&&!theDB.trigOverList.Contains(93)){
+            gameObject.SetActive(false);
+        }
+
     }
 
     /////////////////////////////////////////////////////////////////////   해당 위치에서 1. 실행전이고, 2. 키입력시 트리거 발생
@@ -126,6 +130,12 @@ public class Trig45 : MonoBehaviour
         thePlayer.exc.SetBool("on",false);
         thePlayer.canInteractWith = 0;
     }
+    public void OuterAccess(){
+                flag = true;
+        thePlayer.exc.SetBool("on",false);
+        thePlayer.canInteractWith = 0;
+        StartCoroutine(EventCoroutine());
+    }
 
 
     IEnumerator EventCoroutine(){
@@ -150,9 +160,9 @@ public class Trig45 : MonoBehaviour
             else if(trigNum==56){//탈출
                 thePlayer.isInteracting = true;
                 ObjectManager.instance.ImageFadeOut(FadeManager.instance.fog0.GetComponent<Image>(),0.015f);
-        StartCoroutine(RubyWalk());
+                StartCoroutine(RubyWalk());
 
-        yield return new WaitUntil(()=>rubyMovePoint0.position==thePlayer.transform.position);
+                yield return new WaitUntil(()=>rubyMovePoint0.position==thePlayer.transform.position);
                 
             }
 

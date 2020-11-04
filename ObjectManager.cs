@@ -29,7 +29,7 @@ public class ObjectManager : MonoBehaviour
     //TEXT
     public Color color5;
     public Color color6;
-
+    private PlayerManager thePlayer;
     WaitForSeconds wait01 = new WaitForSeconds(0.01f);
     // Start is called before the first frame update
 
@@ -41,6 +41,7 @@ public class ObjectManager : MonoBehaviour
         color4 = new Color (1,1,1,1);
         color5 = new Color (1,1,1,1);
         color6 = new Color (1,1,1,1);
+        thePlayer = PlayerManager.instance;
     }
 
     // Update is called once per frame
@@ -51,12 +52,12 @@ public class ObjectManager : MonoBehaviour
     public void SAC(){
         StopAllCoroutines();
     }
-    public void FadeOut(SpriteRenderer sprite, float speed=0.03f, bool activation = true){
+    public void FadeOut(SpriteRenderer sprite, float speed=0.03f, bool activation = true, bool isUnknown = false){
 
         //StopAllCoroutines();
-        StartCoroutine(FadeOutCoroutine(sprite, speed, activation));
+        StartCoroutine(FadeOutCoroutine(sprite, speed, activation, isUnknown));
     }
-    public IEnumerator FadeOutCoroutine(SpriteRenderer sprite, float speed, bool activation){
+    public IEnumerator FadeOutCoroutine(SpriteRenderer sprite, float speed, bool activation, bool isUnknown){
         
         color3 = sprite.color;
         //fadeFlag = true;
@@ -73,6 +74,9 @@ public class ObjectManager : MonoBehaviour
         }
         if(activation)
             sprite.gameObject.SetActive(false);
+        if(isUnknown){
+            sprite.gameObject.transform.position = new Vector3 (0f,20f,0f);
+        }
         if(color3.a <=0f)
             color3 = new Color(1,1,1,1);
         //color = new Color(1,1,1,1);

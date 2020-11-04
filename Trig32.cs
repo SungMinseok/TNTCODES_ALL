@@ -47,7 +47,7 @@ public class Trig32 : MonoBehaviour
     
     public SpriteRenderer letter73;
     //public GameObject centerView;
-    
+    public Trig45 trig50;
 
     ///////////////////////////////////////////////////////////////////   Don't Touch
     private DialogueManager theDM;
@@ -66,6 +66,7 @@ public class Trig32 : MonoBehaviour
     protected bool flag;    // true 이면 다시 실행 안됨.
     
     private int bifur;
+    [Space()]
     public GameObject cameraPoint0;
     public GameObject cameraPoint1;
     public GameObject cameraPoint2;
@@ -474,6 +475,12 @@ public class Trig32 : MonoBehaviour
             case 92 :
                 BGMManager.instance.FadeOutMusic();
                 break;
+            case 93 :                
+                StartCoroutine(RubyWalk("UP"));
+                yield return new WaitForSeconds(4f);
+                trig50.gameObject.SetActive(true);
+                trig50.OuterAccess();
+                break;
             default :
                 if(bifur==0){
                     theDM.ShowDialogue(dialogue_0);
@@ -505,10 +512,17 @@ public class Trig32 : MonoBehaviour
     //IEnumerator OpenBook(){
 
     //}
-    IEnumerator RubyWalk(){
+    IEnumerator RubyWalk(string dir = "LEFT"){
         
         while(thePlayer.gameObject.transform.position!=rubyMovePoint0.position){
-                thePlayer.animator.SetFloat("Horizontal", -1f);
+                switch(dir){
+                    case "LEFT" :
+                        thePlayer.animator.SetFloat("Horizontal", -1f);
+                        break;
+                    case "UP" :
+                        thePlayer.animator.SetFloat("Vertical", 1f);
+                        break;
+                }
                 thePlayer.animator.SetFloat("Speed", 1f);
                 thePlayer.gameObject.transform.position = Vector3.MoveTowards(thePlayer.gameObject.transform.position,
                 rubyMovePoint0.position, 3f* Time.deltaTime); 

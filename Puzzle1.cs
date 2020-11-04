@@ -273,6 +273,17 @@ public class Puzzle1 : MonoBehaviour
             CursorManager.instance.RecoverCursor();
             
             StartCoroutine(EventCoroutine4(dialogue_4));
+
+            
+#if ADD_ACH
+        if(!theDB.gameOverList.Contains(2)){
+
+            Debug.Log("업적");
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(12);
+        }
+#endif
+
+
             buttonOff();      
 
         }

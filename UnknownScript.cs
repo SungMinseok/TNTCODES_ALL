@@ -253,7 +253,7 @@ public class UnknownScript : MonoBehaviour
     }
 
     public IEnumerator ActivatedWaiting(){
-        ObjectManager.instance.FadeOut(spriteRenderer, 0.03f, false);
+        ObjectManager.instance.FadeOut(spriteRenderer, 0.03f, false, true);
         shadow.SetActive(false);
         
         yield return new WaitForSeconds(myInfo.timer_wait);

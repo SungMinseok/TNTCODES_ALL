@@ -59,9 +59,16 @@ public class Control3 : MonoBehaviour
 
             //game5.passGame();
             AudioManager.instance.Play("success0");
-            StartCoroutine(GameManager.instance.GameSuccess());
+            GameManager.instance.GameSuccessTrig();
             game5.Invoke("passGame",GameManager.instance.successWaitTime);
         }
+#if ADD_ACH
+        else if(blocks[0].nowNum == 1 &&blocks[1].nowNum == 15 &&blocks[2].nowNum == 13 &&blocks[3].nowNum == 24 ){
+
+            Debug.Log("업적");
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(1);
+        }
+#endif
 
     }
 }

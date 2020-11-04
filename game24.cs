@@ -143,7 +143,7 @@ public class game24 : MonoBehaviour
     public void AnswerCheck(){
         if(cardOrder.SequenceEqual(answer)){
             AudioManager.instance.Play("success0");
-            StartCoroutine(GameManager.instance.GameSuccess());
+            GameManager.instance.GameSuccessTrig();
             Invoke("PassGame",GameManager.instance.successWaitTime);
         }
     }

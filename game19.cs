@@ -24,6 +24,7 @@ public class game19 : MonoBehaviour
     private DatabaseManager theDB;
     private PuzzleManager thePuzzle;
     private PlayerManager thePlayer;
+    public Button exitBtn;
     
     void Start()               
     {
@@ -192,7 +193,7 @@ public class game19 : MonoBehaviour
         StartCoroutine(PeanutClickCoroutine());
     }
     IEnumerator PeanutClickCoroutine(){
-        
+        exitBtn.interactable = false;
         rubyHands.SetActive(true);
         yield return new WaitForSeconds(0.25f);
         peanut.SetActive(false);

@@ -52,9 +52,10 @@ public class game2 : MonoBehaviour
         Puzzle1.buttonOn();
         //thePuzzle.treeFace.SetActive(true);
 #if ADD_ACH
-            if(count<=12){
+            if(count<=14){
                 
             Debug.Log("업적");
+            //Debug.Log("s : "+count);
             
             if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(11);
             }

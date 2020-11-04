@@ -55,6 +55,7 @@ public class SteamAchievement : MonoBehaviour
 
     void Update(){
         //if(!m_bInitialized){
+#if UNITY_EDITOR
             if(Input.GetKey(KeyCode.F5)){
                 for(int i=1; i<=8; i++){
                     
@@ -62,7 +63,7 @@ public class SteamAchievement : MonoBehaviour
                 Debug.Log(i+"번 업적 잠금");
                 }
             }
-
+#endif
         //}
         SteamAPI.RunCallbacks();
     }

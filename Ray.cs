@@ -97,7 +97,7 @@ public class Ray : MonoBehaviour
         if(this.gameObject.name =="MainBlock"&&GetComponent<RectTransform>().anchoredPosition.x>80){
             //game6.instance.passGame();
             AudioManager.instance.Play("success0");
-            StartCoroutine(GameManager.instance.GameSuccess());
+            GameManager.instance.GameSuccessTrig();
             game6.instance.Invoke("passGame",GameManager.instance.successWaitTime);
         }
     }

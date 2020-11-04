@@ -98,7 +98,7 @@ public class Control2 : MonoBehaviour
 
         //game18.passGame();
         AudioManager.instance.Play("success0");
-        StartCoroutine(GameManager.instance.GameSuccess());
+            GameManager.instance.GameSuccessTrig();
         game18.Invoke("passGame",GameManager.instance.successWaitTime);
     }
 }

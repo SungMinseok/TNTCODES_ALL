@@ -102,7 +102,7 @@ public class Control : MonoBehaviour
         //game2.passGame();
         
         AudioManager.instance.Play("success0");
-        StartCoroutine(GameManager.instance.GameSuccess());
+            GameManager.instance.GameSuccessTrig();
         game2.Invoke("passGame",GameManager.instance.successWaitTime);
     }
 }
