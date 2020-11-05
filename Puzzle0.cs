@@ -412,6 +412,10 @@ public class Puzzle0 : MonoBehaviour
         AudioManager.instance.Play("getitem2");
         theDM.ShowDialogue(dialogue_5);
         yield return new WaitUntil(()=> !theDM.talking);
+#if ADD_ACH
+        Debug.Log("업적22");
+        if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(22);
+#endif
     }
 
 
@@ -489,13 +493,13 @@ public class Puzzle0 : MonoBehaviour
     }
     void TalkCheck(){
 
-#if ADD_ACH
+//#if ADD_ACH
         if(!theDB.gameOverList.Contains(27)&&talkCount[0]&&talkCount[1]&&talkCount[2]){
             theDB.gameOverList.Add(27);
-            Debug.Log("업적");
+            Debug.Log("업적9");
             
-            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(10);
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(9);
         }
-#endif
+//#endif
     }
 }

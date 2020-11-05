@@ -205,6 +205,10 @@ public class Puzzle3 : MonoBehaviour
         AudioManager.instance.Play("getitem0");
         theDM.ShowDialogue(dialogue_9);
         yield return new WaitUntil(()=> !theDM.talking);
+#if ADD_ACH
+        Debug.Log("업적25");
+        if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(25);
+#endif
         //Debug.Log("111");
                     //AudioManager.instance.Play("pageflip2");
     }

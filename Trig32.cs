@@ -535,7 +535,7 @@ public class Trig32 : MonoBehaviour
         theOrder.NotMove(); 
         DialogueManager.instance.ShowDialogue(Inventory.instance.wrongTribute);
         yield return new WaitUntil(()=> !DialogueManager.instance.talking);
-        
+        theDB.gameOverList.Add(28);
         thePlayer.canInteractWith = 0;
         theOrder.Move(); 
     }
@@ -571,9 +571,14 @@ public class Trig32 : MonoBehaviour
         yield return new WaitUntil(()=> !theDM.talking);
 
         if(theDB.trigOverList.Contains(86)&&theDB.trigOverList.Contains(87)&&theDB.trigOverList.Contains(88)){
-            
+//#if ADD_ACH
+            if(!theDB.gameOverList.Contains(28)){
+                Debug.Log("업적15");        
+                if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(15);
+            }
+//#endif
             if(trigNum==88) trig89.flag = true;
-        thePlayer.canInteractWith = 0;
+            thePlayer.canInteractWith = 0;
             DialogueManager.instance.ShowDialogue(Inventory.instance.checkAllTributes);
             yield return new WaitUntil(()=> !DialogueManager.instance.talking);
         }

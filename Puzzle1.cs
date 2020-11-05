@@ -278,7 +278,7 @@ public class Puzzle1 : MonoBehaviour
 #if ADD_ACH
         if(!theDB.gameOverList.Contains(2)){
 
-            Debug.Log("업적");
+            Debug.Log("업적12");
             if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(12);
         }
 #endif
@@ -379,7 +379,10 @@ public class Puzzle1 : MonoBehaviour
         if(theDB.gameOverList.Contains(4)&&theDB.gameOverList.Contains(2)&&!happyFace.activeSelf){
             happyFace.SetActive(true);
             theDB.puzzleOverList.Add(1);   
-
+#if ADD_ACH
+            Debug.Log("업적23");
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(23);
+#endif
             SpritesOn();
 
             thePlayer.autoSave = true;

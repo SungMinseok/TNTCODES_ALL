@@ -36,7 +36,6 @@ public class SteamAchievement : MonoBehaviour
 
         TestSteamAchievement(num);
         if(!unlockTest){
-                    
             SteamUserStats.SetAchievement("NEW_ACHIEVEMENT_1_"+num.ToString());
             SteamUserStats.StoreStats();
         }

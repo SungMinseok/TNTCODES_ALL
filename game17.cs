@@ -31,6 +31,10 @@ public class game17 : MonoBehaviour
 
     }
     public void passGame(){
+#if ADD_ACH
+        Debug.Log("업적24");
+        if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(24);
+#endif
         theDB.gameOverList.Add(17);
         //theDB.doorEnabledList.Add(16);
         gameObject.SetActive(false);

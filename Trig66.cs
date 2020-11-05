@@ -177,8 +177,5 @@ public class Trig66 : MonoBehaviour
             //PaperManager.instance.letterBtn.gameObject.SetActive(true);
     }
     
-    void FixedUpdate(){
-
-    }
 }
 

@@ -25,7 +25,9 @@ public class Trig45 : MonoBehaviour
     public Dialogue dialogue_2;
     [Header ("문 열기 실패 후 대사")]
     public Dialogue dialogue_3;
-
+    [Header ("대사 카운트")]
+    public int dialogueCount;
+    public Trig45 trig53;
     public SpriteRenderer defaultHandle;
     public SpriteRenderer activatedHandle;
     public GameObject closed, opened;
@@ -148,7 +150,17 @@ public class Trig45 : MonoBehaviour
 
 
         //////////////////////////////////////////////////////////////////////트리거마다 수정해야하는 부분 시작
-     
+//#if ADD_ACH
+        if(trigNum!=50&&trigNum!=52){
+            trig53.dialogueCount ++;
+            if(trig53.dialogueCount>=8){
+                Debug.Log("업적11");        
+                if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(11);
+            }
+        }
+//#endif
+
+
         if(bifur==0){
             if(trigNum==47){//기계소리가 난다
                 AudioManager.instance.Play("boosruck");

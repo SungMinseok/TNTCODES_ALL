@@ -6,6 +6,7 @@ public class game26 : MonoBehaviour
 {
     public static game26 instance;
     public BoxCollider2D[] bounds;
+    public int moveCount;
 
     void Start(){
         instance = this;

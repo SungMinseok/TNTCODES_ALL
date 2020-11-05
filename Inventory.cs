@@ -340,6 +340,10 @@ public class Inventory : MonoBehaviour
                 thePlayer.spriteRenderer.flipX = true;
                 break;
             case 17 :
+#if ADD_ACH
+                Debug.Log("업적26");
+                if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(26);
+#endif
                 thePlayer.milkRemain = 2;
                 AudioManager.instance.Play("eat0");
                 thePlayer.spriteRenderer.color = new Color(1,1,0.5f,1);

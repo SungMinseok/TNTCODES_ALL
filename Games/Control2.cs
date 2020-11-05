@@ -101,4 +101,26 @@ public class Control2 : MonoBehaviour
             GameManager.instance.GameSuccessTrig();
         game18.Invoke("passGame",GameManager.instance.successWaitTime);
     }
+//#if ADD_ACH
+    public bool CheckBonus(){
+        for(int i=1;i<fakeBlocks.Length;i++){
+            if(i<=2){
+                if(fakeBlocks[i].nowNum-fakeBlocks[0].nowNum!=i){
+                    return false;
+                }
+            }
+            else if(i<=5){
+                if(fakeBlocks[i].nowNum-fakeBlocks[0].nowNum!=i+1){
+                    return false;
+                }
+            }
+            else{
+                if(fakeBlocks[i].nowNum-fakeBlocks[0].nowNum!=i+2){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+//#endif
 }

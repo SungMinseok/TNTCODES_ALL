@@ -111,6 +111,14 @@ public class Slot2 : MonoBehaviour, IDropHandler
         
         AudioManager.instance.Play("hammer"+ranNum.ToString());
         control.CheckGame();
+//#if ADD_ACH
+        if(!DatabaseManager.instance.gameOverList.Contains(30)&&control.CheckBonus()){
+
+            Debug.Log("업적13");
+            DatabaseManager.instance.gameOverList.Add(30);
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(13);
+        }
+//#endif
 
     }
 }

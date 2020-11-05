@@ -227,6 +227,14 @@ public class TransferMap : MonoBehaviour
             theFade.FadeIn();
             theOrder.Move();
         }
+//#if ADD_ACH
+            
+        if(doorNum==35&&game26.instance.moveCount==4){
+            Debug.Log("업적16");        
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(16);
+        }
+            
+//#endif
         //onWaitingFlag = false;
         thePlayer.isTransporting = false;
         thePlayer.isTransporting2 = false;

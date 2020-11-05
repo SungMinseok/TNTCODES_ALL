@@ -25,6 +25,7 @@ public class Trig59 : MonoBehaviour
     public GameObject[] mats = new GameObject[4];
     public GameObject centerView;
     //public GameObject centerView;
+    public int refuseCount;
     
 
     ///////////////////////////////////////////////////////////////////   Don't Touch
@@ -174,6 +175,15 @@ public class Trig59 : MonoBehaviour
                 }
             }
             else{
+//#if ADD_ACH
+            
+                refuseCount ++;
+                if(refuseCount==3){
+                    Debug.Log("업적17");        
+                    if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(17);
+                }
+            
+//#endif
                 thePlayer.notMove= false;
                     flag=false;
             }

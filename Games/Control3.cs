@@ -62,13 +62,13 @@ public class Control3 : MonoBehaviour
             GameManager.instance.GameSuccessTrig();
             game5.Invoke("passGame",GameManager.instance.successWaitTime);
         }
-#if ADD_ACH
-        else if(blocks[0].nowNum == 1 &&blocks[1].nowNum == 15 &&blocks[2].nowNum == 13 &&blocks[3].nowNum == 24 ){
-
-            Debug.Log("업적");
-            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(1);
+//#if ADD_ACH
+        else if(!DatabaseManager.instance.gameOverList.Contains(29)&&blocks[0].nowNum == 1 &&blocks[1].nowNum == 15 &&blocks[2].nowNum == 13 &&blocks[3].nowNum == 24 ){
+            DatabaseManager.instance.gameOverList.Add(29);
+            Debug.Log("업적10");
+            if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(10);
         }
-#endif
+//#endif
 
     }
 }

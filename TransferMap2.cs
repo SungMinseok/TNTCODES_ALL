@@ -81,7 +81,7 @@ public class TransferMap2 : MonoBehaviour
 
         thePlayer.isTransporting2 = true;//이동효과때문에 있음
         activated = true;
-
+        game26.instance.moveCount++;
         theOrder.NotMove();
         theFade.FadeOut();
             switch(direction){
