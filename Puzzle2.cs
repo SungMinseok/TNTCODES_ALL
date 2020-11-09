@@ -411,12 +411,12 @@ public class Puzzle2 : MonoBehaviour
                     yield return new WaitForSeconds(2f);
                     theDM.ShowDialogue(dialogue_11);
                     yield return new WaitUntil(()=> !theDM.talking);
-#if ADD_ACH
+//#if ADD_ACH
                     if(!canExit){
-                        Debug.Log("업적");
-                        if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(15);
+                        Debug.Log("업적17");
+                        if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(17);
                     }
-#endif
+//#endif
                 } 
                 else if(theDB.OnActivated[0]){
                     StartCoroutine(Inventory.instance.WrongUse());
