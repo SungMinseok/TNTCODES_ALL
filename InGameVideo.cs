@@ -9,7 +9,7 @@ public class InGameVideo : MonoBehaviour
 {
     public static InGameVideo instance;
     public VideoPlayer theVideo;
-    [Header("0: 진엔딩, 1: 크레딧, 2: 끝로고, 3: 헨리영상")]
+    [Header("0: 진엔딩, 1: 크레딧, 2: 끝로고, 3: 진엔딩(영어), 4: 크레딧(진엔딩)")]
     public VideoClip[] videoClips;
     public GameObject rawImage;
     public GameObject backGround;
@@ -60,8 +60,14 @@ public class InGameVideo : MonoBehaviour
             case "LastLogo" : 
                 theVideo.clip = videoClips[2];
                 break;
-            case "Henry" : 
+            case "TrueEnding_EN" : 
                 theVideo.clip = videoClips[3];
+                break;
+            case "Credit_TRUE" : 
+                theVideo.clip = videoClips[4];
+                break;
+            default :
+                Debug.Log("Error : No Video.");
                 break;
         }
         theVideo.gameObject.SetActive(true);

@@ -151,7 +151,7 @@ public class Trig45 : MonoBehaviour
 
         //////////////////////////////////////////////////////////////////////트리거마다 수정해야하는 부분 시작
 //#if ADD_ACH
-        if(trigNum!=50&&trigNum!=52){
+        if(trigNum!=50&&trigNum!=52&&trigNum!=56){
             trig53.dialogueCount ++;
             if(trig53.dialogueCount>=8){
                 Debug.Log("업적11");        

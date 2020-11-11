@@ -212,7 +212,14 @@ public class Trig74 : MonoBehaviour
 
             thePlayer.animator.SetBool("openbook", false);
             yield return new WaitForSeconds(3f);
-            InGameVideo.instance.StartVideo("TrueEnding");
+            if(GameMultiLang.instance.nowLang=="kr"){
+
+                InGameVideo.instance.StartVideo("TrueEnding");
+            }
+            else if(GameMultiLang.instance.nowLang=="en"){
+
+                InGameVideo.instance.StartVideo("TrueEnding_EN");
+            }
 
             yield return new WaitUntil(()=> InGameVideo.instance.theVideo.isPlaying);
             Fade2Manager.instance.FadeIn(0.01f);
@@ -298,21 +305,21 @@ public class Trig74 : MonoBehaviour
         } 
 #endregion
 
-#region (영상) 진엔딩 헨리
+// #region (영상) 진엔딩 헨리
 
-        if(PaperManager.instance.letter0.activeSelf&&PaperManager.instance.letter1.activeSelf){
+//         if(PaperManager.instance.letter0.activeSelf&&PaperManager.instance.letter1.activeSelf){
             
-            yield return new WaitForSeconds(1f);
-            InGameVideo.instance.StartVideo("Henry");
-            yield return new WaitUntil(()=> InGameVideo.instance.theVideo.isPlaying);
-            FadeManager.instance.FadeIn(0.01f);
+//             yield return new WaitForSeconds(1f);
+//             InGameVideo.instance.StartVideo("Henry");
+//             yield return new WaitUntil(()=> InGameVideo.instance.theVideo.isPlaying);
+//             FadeManager.instance.FadeIn(0.01f);
 
-            yield return new WaitUntil(()=> !InGameVideo.instance.isPlaying);
-            FadeManager.instance.FadeOut(0.01f);
-            yield return new WaitForSeconds(4f);
-            InGameVideo.instance.ExitVideo();
-        }
-#endregion
+//             yield return new WaitUntil(()=> !InGameVideo.instance.isPlaying);
+//             FadeManager.instance.FadeOut(0.01f);
+//             yield return new WaitForSeconds(4f);
+//             InGameVideo.instance.ExitVideo();
+//         }
+// #endregion
 
 #region (영상) 크레딧
 
@@ -323,7 +330,12 @@ public class Trig74 : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        InGameVideo.instance.StartVideo("Credit");
+        if(PaperManager.instance.letter0.activeSelf&&PaperManager.instance.letter1.activeSelf){
+            InGameVideo.instance.StartVideo("Credit_TRUE");
+        }
+        else{
+            InGameVideo.instance.StartVideo("Credit");
+        }
         yield return new WaitUntil(()=> InGameVideo.instance.theVideo.isPlaying);
         FadeManager.instance.FadeIn(0.01f);
 

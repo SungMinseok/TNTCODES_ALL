@@ -56,7 +56,7 @@ public class SteamAchievement : MonoBehaviour
         //if(!m_bInitialized){
 #if UNITY_EDITOR
             if(Input.GetKey(KeyCode.F5)){
-                for(int i=1; i<=8; i++){
+                for(int i=1; i<=17; i++){
                     
                 DEBUG_LockSteamAchievement(i);
                 Debug.Log(i+"번 업적 잠금");
