@@ -65,7 +65,7 @@ public class Trig2 : MonoBehaviour
                 thePlayer.canInteractWith = trigNum;
             }
 
-            if(!flag && Input.GetKeyDown(KeyCode.Space)&&!theDB.doorLockedList.Contains(1)&&
+            if(!flag && thePlayer.getSpace&&!theDB.doorLockedList.Contains(1)&&
                 thePlayer.canInteractWith == trigNum){
                 flag = true;
             thePlayer.exc.SetBool("on",false);

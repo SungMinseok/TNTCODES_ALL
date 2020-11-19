@@ -11,6 +11,7 @@ public class PlayerManager : MovingObject
 {
     public static PlayerManager instance; //static은 정적변수, 해당스크립트가 적용된 모든객체들은 static으로 선언된 변수의 값을 공유
     
+    public bool mobileTest;
     [HideInInspector]public Transform pointInMaze;
     public Animator exc;
     public SpriteRenderer shadow_normal;
@@ -80,6 +81,7 @@ public class PlayerManager : MovingObject
     public int shoe1Remain;  //우유먹었을때 초기화 넘버
     public int transferMapCount;   //맵 이동 횟수.
     public int[] mapCheckList = new int[20];
+    public bool getSpace;
 
     void Start(){
         theSL = FindObjectOfType<SaveNLoad>();
@@ -107,7 +109,7 @@ public class PlayerManager : MovingObject
     
     void Update()//여기에는 input넣고 fixedupdate에는 움직임movement넣기
     {
-        if(!notMove){
+        if(!notMove&&!mobileTest){
             if(autoSave){
                 StartCoroutine(AutoSave());
             }
@@ -193,12 +195,6 @@ public class PlayerManager : MovingObject
                 animator.SetFloat("Speed", 0f);
             }
         }
-        // else{
-
-        //     if(BookManager.instance.onButton.activeSelf){
-        //         BookManager.instance.onButton.GetComponent<Button>().interactable = true;
-        //     }
-        // }
 
 
 
@@ -208,9 +204,16 @@ public class PlayerManager : MovingObject
             animator.SetFloat("Speed", 0);
         }
 
+        if(Input.GetKeyDown(KeyCode.Space)){
+            getSpace = true;
+        }
+        else if(Input.GetKeyUp(KeyCode.Space)){
+            getSpace = false;
+        }
+
     }
     void FixedUpdate(){
-        if(!notMove){
+        if(!notMove&&!mobileTest){
 
         // //이동시 위치 설정
         //     if(Input.GetKey(KeyCode.LeftShift)){
@@ -569,5 +572,5 @@ public class PlayerManager : MovingObject
             
         }
     }
-
+    
 }

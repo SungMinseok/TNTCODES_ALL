@@ -115,10 +115,6 @@ public class Block : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDra
         //isMoving =true;
     }
 
-    void Update(){
-        
-    }
-
     public void Relocate(){
         if(!fixedBlock){
 

@@ -46,7 +46,7 @@ public class Trig1 : MonoBehaviour
     /////////////////////////////////////////////////////////////////////   해당 위치에서 1. 실행전이고, 2. 키입력시 트리거 발생
     private void OnTriggerStay2D(Collider2D collision){
        
-        if(!flag && !autoEnable && Input.GetKeyDown(KeyCode.Space)&& !theDM.talking &&thePlayer.canInteractWith == trigNum){
+        if(!flag && !autoEnable && thePlayer.getSpace&& !theDM.talking &&thePlayer.canInteractWith == trigNum){
             flag = true;
             StartCoroutine(EventCoroutine());
         }

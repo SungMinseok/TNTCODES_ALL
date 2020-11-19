@@ -48,8 +48,8 @@ public class HotkeyManager : MonoBehaviour
 #if DEV_MODE
         isDevMode.SetActive(true);
         isDevMode.GetComponent<Text>().text += " VER." + Application.version + " " + DebugManager.instance.update;
-        playCount.text += DebugManager.playerInfo.count_play;
-        clearCount.text += DebugManager.playerInfo.count_clear;
+        playCount.text += DebugManager.instance.playerInfo.count_play;
+        clearCount.text += DebugManager.instance.playerInfo.count_clear;
 
 
 #endif

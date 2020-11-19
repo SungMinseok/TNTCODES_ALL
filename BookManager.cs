@@ -28,6 +28,7 @@ public class BookManager : MonoBehaviour
     [Header ("Readable")]
     public GameObject unknownManaul;
     public GameObject mazeManaul;
+    public GameObject mazeManaul_en;
     [Header ("Basic")]
     public GameObject book;
     public GameObject updateIcon;
