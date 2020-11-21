@@ -517,6 +517,7 @@ public class Puzzle2 : MonoBehaviour
     
     public void exitPuzzle(){
             AudioManager.instance.Play("button20");
+        CursorManager.instance.RecoverCursor();
         StartCoroutine(exitPuzzleCoroutine());
 
     }

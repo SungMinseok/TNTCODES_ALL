@@ -64,9 +64,9 @@ public class InteractableArea : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if(type==InteractableType.CursorAccess){
 
             if(forcedOff){
-                
+                //gameObject.SetActive(false);
     //       Debug.Log("OnPointerUp : "+gameObject.name);
-            CursorManager.instance.interactable = false;
+                CursorManager.instance.interactable = false;
             }
         }
     }

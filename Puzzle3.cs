@@ -179,6 +179,7 @@ public class Puzzle3 : MonoBehaviour
         inMain = false;
         SpritesOff();
             AudioManager.instance.Play("button20");
+        CursorManager.instance.RecoverCursor();
         StartCoroutine(ExitPuzzleCoroutine());
     }
     

@@ -239,6 +239,7 @@ public class Puzzle0 : MonoBehaviour
         // Debug.Log("3번?");
 
         leaf.SetActive(false);
+                CursorManager.instance.interactable = false;
         Invoke("buttonOn", 0.2f);
     }
     IEnumerator Broken()
@@ -387,6 +388,7 @@ public class Puzzle0 : MonoBehaviour
         inMain = false;
         SpritesOff();
         AudioManager.instance.Play("button20");
+        CursorManager.instance.RecoverCursor();
         StartCoroutine(exitPuzzleCoroutine());
         //whatPuzzle.SetActive(false);
         //thePuzzle.buttonOn();

@@ -95,7 +95,7 @@ public class CursorManager : MonoBehaviour
     
     public void RecoverCursor(){
         _default = true;
-                
+        interactable = false;
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
         //theDB.OnActivated[0] = false;
         theDB.DeactivateItem();
