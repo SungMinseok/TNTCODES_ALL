@@ -1,13 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
+#if UNITY_ANDROID || UNITY_IOS || UNITY_TIZEN || UNITY_TVOS || UNITY_WEBGL || UNITY_WSA || UNITY_PS4 || UNITY_WII || UNITY_XBOXONE || UNITY_SWITCH
+#define DISABLESTEAMWORKS
+#endif
+
 using UnityEngine;
+#if !DISABLESTEAMWORKS
+
+using System.Collections;
+using System.Collections.Generic;
 using Steamworks;
+#endif
 public class SteamAchievement : MonoBehaviour
 {
-    public static SteamAchievement instance;
+#if !DISABLESTEAMWORKS
     public bool unlockTest = false;
     public CGameID m_GameID;
     public AppId_t appID;
+#endif
+
+    public static SteamAchievement instance;
     private void Awake()
     {
         if(instance == null)
@@ -19,6 +30,19 @@ public class SteamAchievement : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    public void ApplyAchievements(int num){
+        if(!SteamManager.Initialized) { return ; }
+
+#if !DISABLESTEAMWORKS
+        TestSteamAchievement(num);
+        if(!unlockTest){
+            SteamUserStats.SetAchievement("NEW_ACHIEVEMENT_1_"+num.ToString());
+            SteamUserStats.StoreStats();
+        }
+#endif
+    }
+    
+#if !DISABLESTEAMWORKS
     void Start()
     {
         appID = SteamUtils.GetAppID();
@@ -31,15 +55,15 @@ public class SteamAchievement : MonoBehaviour
     //     }
     // }
 
-    public void ApplyAchievements(int num){
-        if(!SteamManager.Initialized) { return ; }
+    // public void ApplyAchievements(int num){
+    //     if(!SteamManager.Initialized) { return ; }
 
-        TestSteamAchievement(num);
-        if(!unlockTest){
-            SteamUserStats.SetAchievement("NEW_ACHIEVEMENT_1_"+num.ToString());
-            SteamUserStats.StoreStats();
-        }
-    }
+    //     TestSteamAchievement(num);
+    //     if(!unlockTest){
+    //         SteamUserStats.SetAchievement("NEW_ACHIEVEMENT_1_"+num.ToString());
+    //         SteamUserStats.StoreStats();
+    //     }
+    // }
     public void DEBUG_LockSteamAchievement(int num){
         
         TestSteamAchievement(num);
@@ -70,4 +94,6 @@ public class SteamAchievement : MonoBehaviour
     void TestSteamAchievement(int num){
         SteamUserStats.GetAchievement("NEW_ACHIEVEMENT_1_"+num.ToString(), out unlockTest);
     }
+#endif
+
 }
