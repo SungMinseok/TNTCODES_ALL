@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_ANDROID || UNITY_IOS
+#define DISABLEKEYBOARD
+#endif
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +14,7 @@ public class PlayerManager : MovingObject
 {
     public static PlayerManager instance; //static은 정적변수, 해당스크립트가 적용된 모든객체들은 static으로 선언된 변수의 값을 공유
     
-    public bool mobileTest;
+    public GameObject mobileController;
     [HideInInspector]public Transform pointInMaze;
     public Animator exc;
     public SpriteRenderer shadow_normal;
@@ -81,7 +84,9 @@ public class PlayerManager : MovingObject
     public int shoe1Remain;  //우유먹었을때 초기화 넘버
     public int transferMapCount;   //맵 이동 횟수.
     public int[] mapCheckList = new int[20];
+    [Header("InMobile")]
     public bool getSpace;
+    public bool isRunning;
 
     void Start(){
         theSL = FindObjectOfType<SaveNLoad>();
@@ -97,6 +102,9 @@ public class PlayerManager : MovingObject
         }
 
         ResetColor();
+#if DISABLEKEYBOARD
+        mobileController.SetActive(true);
+#endif
 
     }
     public void LetBegin()                          //게임 로드시 일어나는 애니메이션을 위해
@@ -109,101 +117,41 @@ public class PlayerManager : MovingObject
     
     void Update()//여기에는 input넣고 fixedupdate에는 움직임movement넣기
     {
-        if(!notMove&&!mobileTest){
+        if(!notMove){
             if(autoSave){
                 StartCoroutine(AutoSave());
             }
             if(isInteracting){
                 notMove = true;
             }
-            // if(BookManager.instance.onButton.activeSelf){
-            //     BookManager.instance.onButton.GetComponent<Button>().interactable = false;
-            // }
-            // if(Input.GetAxisRaw("Vertical")==0) movingY = false;
-            // if(Input.GetAxisRaw("Horizontal")==0) movingX = false;
-            // if(Input.GetAxisRaw("Vertical")!=0) movingY = true;
-            // if(Input.GetAxisRaw("Horizontal")!=0) movingX = true;
-            
-            // if(movingY && )
-
-            // if(Input.GetAxisRaw("Horizontal")!=0 ||Input.GetAxisRaw("Vertical")!=0){
-            //     movement.Set(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));
-
-
-            //     //movement.Set(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));
-            //     if(movement.x !=0) movement.Set(Input.GetAxisRaw("Horizontal"), 0);
-            //     else if(movement.y !=0) movement.Set(0,Input.GetAxisRaw("Vertical"));
-            // } 
-
-            if(Input.GetAxisRaw("Vertical")!=0 /* || Input.GetAxisRaw("Vertical")!=0 && Input.GetAxisRaw("Horizontal")!=0 */){    //상하 키 누른 상태
-                // if(Input.GetAxisRaw("Horizontal")!=0){
-                        
-                //     movement.x = Input.GetAxisRaw("Horizontal");
-                //     movement.y = 0;
-                //     Debug.Log("a");
-                // }
-                // else{
-                    //movingY = true;
-
+#if !DISABLEKEYBOARD
+            if(Input.GetAxisRaw("Vertical")!=0){
                 movement.x = 0;
                 movement.y = Input.GetAxisRaw("Vertical");
-//                Debug.Log("b");
-                // }
             }
             else if(Input.GetAxisRaw("Horizontal")!=0){
-                // if(Input.GetAxisRaw("Vertical")!=0){
-                        
-                //     movement.x = 0;
-                //     movement.y = Input.GetAxisRaw("Vertical");
-                //     Debug.Log("c");
-                // }
-                // else{
                 movement.x = Input.GetAxisRaw("Horizontal");
                 movement.y = 0;
-                //Debug.Log("d");
-                // }
             }
-
-
-
-
             if(Input.GetAxisRaw("Horizontal")==0&&Input.GetAxisRaw("Vertical")==0){
                 movement.x = 0;
                 movement.y = 0;
             }
-
-
-            //animator.SetFloat("Speed", movement.sqrMagnitude);
-            
             if(Input.GetKey(KeyCode.LeftShift) && movement!=Vector2.zero && !animator.GetBool("sad")){
                 rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
-                animator.SetFloat("Speed", 2f);
-                // Debug.Log(movement);
-                // Debug.Log(runSpeed);
-                // Debug.Log(Time.fixedDeltaTime);
-                // Debug.Log(movement * runSpeed * Time.fixedDeltaTime);
             }
             else if(movement!=Vector2.zero){
                 rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
                 animator.SetFloat("Speed", 1f);
-                // Debug.Log("1" +movement);
-                // Debug.Log("2" +runSpeed);
-                // Debug.Log("3" +Time.fixedDeltaTime);
-                // Debug.Log(movement * runSpeed * Time.fixedDeltaTime);
             }
             else if(movement==Vector2.zero){
                 animator.SetFloat("Speed", 0f);
             }
+#endif
         }
-
-
-
-
-
         if(isGameOver){
             animator.SetFloat("Speed", 0);
         }
-
         if(Input.GetKeyDown(KeyCode.Space)){
             getSpace = true;
         }
@@ -213,16 +161,9 @@ public class PlayerManager : MovingObject
 
     }
     void FixedUpdate(){
-        if(!notMove&&!mobileTest){
+#if !DISABLEKEYBOARD
+        if(!notMove){
 
-        // //이동시 위치 설정
-        //     if(Input.GetKey(KeyCode.LeftShift)){
-        //         rb.MovePosition(rb.position + movement * (speed*2) * Time.fixedDeltaTime);
-        //     }
-        //     else rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
-        
-        //이동완료 후 방향 고정
-            //movementDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             movementDirection = new Vector2(movement.x, movement.y);
             if (movementDirection != Vector2.zero){
                 animator.SetFloat("Horizontal", movementDirection.x);
@@ -230,51 +171,7 @@ public class PlayerManager : MovingObject
             }
 
         }
-
-        // if(canInteract&&!exc.GetBool("on")){
-        //     exc.SetBool("on",true);
-        // }
-    //번쩍임
-        // if(currentMapName=="ch2"&&!underDarkness){
-        //     underDarkness = true;
-        //     spriteRenderer.color = shadowColor;
-        // }
-        // else{
-        //     underDarkness = false;
-        //     spriteRenderer.color = normalColor;
-        // }
-        // if(currentMapName=="ch2"){
-        //     //underDarkness = true;
-        //     spriteRenderer.color = shadowColor;
-        // }
-        
-        // else{
-        //     //underDarkness = false;
-        //     spriteRenderer.color = normalColor;
-        // }
-        // switch(currentMapName){
-        //     case "ch2" : 
-        //         spriteRenderer.color = shadowColor;
-        //         break;
-        //     case "lakein" : 
-        //         spriteRenderer.color = shadowColor;
-        //         if(!animator.GetBool("onFish")){
-        //             animator.SetBool("onFish", true);
-        //             FadeManager.instance.fog0.SetActive(true);
-
-        //         }
-        //         break;
-        //     case "lake" : 
-        //         spriteRenderer.color = normalColor;
-        //         break;
-        //     case "lakeout" : 
-        //         spriteRenderer.color = normalColor;
-        //         break;
-        //     default :
-        //         spriteRenderer.color = normalColor;
-        //         break;
-        // }
-
+#endif
 
         if(animator.GetBool("onFish")){
             shadow_swim.SetActive(true);

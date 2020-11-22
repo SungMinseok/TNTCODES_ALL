@@ -65,7 +65,7 @@ public class Trig2 : MonoBehaviour
                 thePlayer.canInteractWith = trigNum;
             }
 
-            if(!flag && thePlayer.getSpace&&!theDB.doorLockedList.Contains(1)&&
+            if(!flag &&(Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&&!theDB.doorLockedList.Contains(1)&&
                 thePlayer.canInteractWith == trigNum){
                 flag = true;
             thePlayer.exc.SetBool("on",false);
@@ -73,7 +73,6 @@ public class Trig2 : MonoBehaviour
                 StartCoroutine(EventCoroutine());
             }
         }
-
     }
     
     void OnTriggerExit2D(Collider2D collision){

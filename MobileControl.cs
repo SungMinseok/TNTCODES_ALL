@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-#if UNITY_ANDROID || UNITY_EDITOR
 public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IPointerClickHandler
 {
+    
+#if UNITY_ANDROID || UNITY_IOS
     [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform bg;
     [SerializeField] private RectTransform js;
@@ -20,17 +21,36 @@ public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     void Start()
     {
         //thePlayer = PlayerManager.instance;
-        if (!thePlayer.mobileTest) mobileController.SetActive(false);
+        mobileController.SetActive(true);
         r = bg.rect.width * 0.5f;
     }
 
     void Update()
     {
         if(isJoystick){
-            if (isTouch)
-            {
-                thePlayer.rb.MovePosition(thePlayer.rb.position + thePlayer.movement * thePlayer.speed * Time.fixedDeltaTime);
-                thePlayer.animator.SetFloat("Speed", 1f);
+            if(!thePlayer.notMove){
+                
+                if (isTouch)
+                {
+                    if(!thePlayer.isRunning){
+                        thePlayer.rb.MovePosition(thePlayer.rb.position + thePlayer.movement * thePlayer.speed * Time.fixedDeltaTime);
+                        thePlayer.animator.SetFloat("Speed", 1f);
+                    }
+                    else if(thePlayer.isRunning){
+                        thePlayer.rb.MovePosition(thePlayer.rb.position + thePlayer.movement * thePlayer.runSpeed * Time.fixedDeltaTime);
+                        thePlayer.animator.SetFloat("Speed", 2f);
+                    }
+                }
+                else{
+                    thePlayer.animator.SetFloat("Speed", 0f);
+
+                }
+            }
+            else if(thePlayer.notMove){
+                
+                isTouch = false;
+                js.localPosition = Vector3.zero;
+                //thePlayer.animator.SetFloat("Speed", 0f);
             }
         }
 
@@ -98,21 +118,30 @@ public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
             isTouch = true;
         }
+        else if(isShift){
+            thePlayer.isRunning = true;
+        }
+        else if(isSpace){
+            thePlayer.getSpace = true;
+        }
     }
     public void OnPointerUp(PointerEventData eventData)
     {
         if(isJoystick){
-
             isTouch = false;
             js.localPosition = Vector3.zero;
             thePlayer.animator.SetFloat("Speed", 0f);
         }
+        else if(isShift){
+            thePlayer.isRunning = false;
+        }
+        else if(isSpace){
+            thePlayer.getSpace = false;
+        }
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(isSpace){
-
-        }
     }
-}
 #endif
+
+}

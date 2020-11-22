@@ -14,6 +14,11 @@ public class Bound : MonoBehaviour
     void Start()
     {
         bound = GetComponent<BoxCollider2D>();
+
+#if UNITY_ANDROID || UNITY_IOS 
+        if(bound.size.x<22.6)
+            bound.size = new Vector2(22.6f,bound.size.y);
+#endif
         theCamera = FindObjectOfType<CameraMovement>();
         //thePlayer = FindObjectOfType<PlayerManager>();
         theCamera.SetBound(bound);

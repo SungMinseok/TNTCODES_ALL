@@ -128,6 +128,8 @@ public class CameraMovement : MonoBehaviour
         bound = newBound;
         minBound = bound.bounds.min;
         maxBound = bound.bounds.max;
+
+//        Debug.Log(minBound+","+ maxBound);
     }
     // public void ZoomOut(){
     //     StartCoroutine(ZoomOutCoroutine());
