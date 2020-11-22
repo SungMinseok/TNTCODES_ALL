@@ -16,6 +16,7 @@ public class SteamAchievement : MonoBehaviour
     public bool unlockTest = false;
     public CGameID m_GameID;
     public AppId_t appID;
+    public bool test;
 #endif
 
     public static SteamAchievement instance;
