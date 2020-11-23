@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_ANDROID || UNITY_IOS
+#define DISABLEKEYBOARD
+#endif
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -72,14 +75,17 @@ public class DialogueManager : MonoBehaviour        //
     public GameObject nextPointer;
     
     private GameMultiLang langS;
-
-
-
+    public SpriteRenderer imageColor;
+    public SpriteRenderer frameColor;
+    public GameObject dialogueImage;
+    [Header("MOBILE")]
+    public bool mobileTouch;
 
     //PlayerManager thePlayer;
     void Start(){
         count = 0 ;
         window.SetActive(false);
+        dialogueImage.SetActive(false);
         //name.SetActive(false);
         nameText.text = "";
         text.text = "";
@@ -91,6 +97,9 @@ public class DialogueManager : MonoBehaviour        //
         theAudio=AudioManager.instance;
         langS=GameMultiLang.instance;
         //thePlayer=PlayerManager.instance;
+#if DISABLEKEYBOARD
+        imageColor.GetComponent<RectTransform>().localScale = new Vector2(12,12);
+#endif
     }
 
     public void ShowDialogue(Dialogue dialogue,bool mute = false){
@@ -101,9 +110,11 @@ public class DialogueManager : MonoBehaviour        //
         else{
             LocalizeLanguages(dialogue);
 
+            PlayerManager.instance.getSpace = false;
             PlayerManager.instance.isInteracting = true;
 
-            window.gameObject.SetActive(true);
+            window.gameObject.SetActive(true);            
+            dialogueImage.SetActive(true);
             if(mute) nextPointer.SetActive(false);
             if(dialogue.images.Length==0) null_check = true;    // image가 아예 없으면 아예 실행 안하도록
 
@@ -164,6 +175,7 @@ public class DialogueManager : MonoBehaviour        //
         animDialogueWindow.SetBool("Appear", false);
         signWindow.SetActive(false);
         window.SetActive(false);
+        dialogueImage.SetActive(false);
         nextPointer.SetActive(true);
         talking = false;
         null_check = false;
@@ -299,30 +311,45 @@ public class DialogueManager : MonoBehaviour        //
     void FixedUpdate()
     {
         if(talking && keyActivated){
+
+            //if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return)||PlayerManager.instance.getSpace||Input.GetMouseButtonDown(0)){
+#if DISABLEKEYBOARD            
+            if(PlayerManager.instance.getSpace || mobileTouch){
+                keyActivated =false;
+        mobileTouch = false;
+        PlayerManager.instance.getSpace = false;
                 
+                count++;
+                /*if(count>=1&&listNames[count]!=listNames[count-1])*/ 
+                nameText.text="";
+                text.text="";
+                if(count==listSentences.Count){
+                    StopAllCoroutines();                
+                    ExitDialogue();
+                }
+                else{
+                    StopAllCoroutines();                
+                    StartCoroutine(StartDialogueCoroutine());
+                }
+            }
+#else
             if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return)||Input.GetMouseButtonDown(0)){
-                //Debug.Log("Z");
-                //Progressing();
-                
                 keyActivated =false;
                 
                 count++;
-                /*if(count>=1&&listNames[count]!=listNames[count-1])*/ nameText.text="";
+                /*if(count>=1&&listNames[count]!=listNames[count-1])*/ 
+                nameText.text="";
                 text.text="";
                 if(count==listSentences.Count){
-                    //StopCoroutine(StartDialogueCoroutine());    
                     StopAllCoroutines();                
                     ExitDialogue();
-                    
                 }
                 else{
-                    //StopCoroutine(StartDialogueCoroutine());
-                    
                     StopAllCoroutines();                
                     StartCoroutine(StartDialogueCoroutine());
-                    
                 }
             }
+#endif
         }
     }
 
@@ -479,5 +506,20 @@ public class DialogueManager : MonoBehaviour        //
             dialogue.sentences_set = dialogue.sentences;
         }
     }
-    
+
+    // public void ForceAlphaOut(){
+    //     imageColor.color = new Color(1,1,1,0);
+    //     frameColor.color = new Color(1,1,1,0);
+    // }
+    public void ActivateMobileTouch(){
+#if DISABLEKEYBOARD
+        mobileTouch = true;
+        //StartCoroutine(AMTCO());
+#endif
+    }
+    IEnumerator AMTCO(){
+        mobileTouch = true;
+        yield return new WaitForSeconds(0.001f);
+        mobileTouch = false;
+    }
 }

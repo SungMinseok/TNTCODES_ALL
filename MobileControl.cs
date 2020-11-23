@@ -2,54 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+public enum ControllerType
+{
+    Joystick,
+    JoyPad,
+    Shift,
+    Space,
+    Btn1,
+    Btn2,
+    Btn3,
+
+}
+#if UNITY_ANDROID || UNITY_IOS
 public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IPointerClickHandler
 {
-    
-#if UNITY_ANDROID || UNITY_IOS
+
+    [SerializeField] private ControllerType type;
     [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform bg;
     [SerializeField] private RectTransform js;
     public GameObject shiftBtn;
     public GameObject spaceBtn;
     public bool isTouch;
+    public bool isDragging;
     private float r;
     public PlayerManager thePlayer;
     public GameObject mobileController;
-    public bool isJoystick;
-    public bool isShift;
-    public bool isSpace;
+    public Camera theCamera;
     void Start()
     {
         //thePlayer = PlayerManager.instance;
+        theCamera = GameObject.Find("Camera").GetComponent<Camera>();
         mobileController.SetActive(true);
         r = bg.rect.width * 0.5f;
     }
 
     void Update()
     {
-        if(isJoystick){
-            if(!thePlayer.notMove){
-                
+        if (/*type == ControllerType.Joystick ||*/ type == ControllerType.JoyPad)
+        {
+            if (!thePlayer.notMove)
+            {
                 if (isTouch)
                 {
-                    if(!thePlayer.isRunning){
+                    if (!thePlayer.isRunning)
+                    {
                         thePlayer.rb.MovePosition(thePlayer.rb.position + thePlayer.movement * thePlayer.speed * Time.fixedDeltaTime);
                         thePlayer.animator.SetFloat("Speed", 1f);
                     }
-                    else if(thePlayer.isRunning){
+                    else if (thePlayer.isRunning)
+                    {
                         thePlayer.rb.MovePosition(thePlayer.rb.position + thePlayer.movement * thePlayer.runSpeed * Time.fixedDeltaTime);
                         thePlayer.animator.SetFloat("Speed", 2f);
                     }
                 }
-                else{
-                    thePlayer.animator.SetFloat("Speed", 0f);
+                else
+                {
+                    if(js.localPosition == Vector3.zero)
+                        thePlayer.animator.SetFloat("Speed", 0f);
 
                 }
             }
-            else if(thePlayer.notMove){
-                
+            else if (thePlayer.notMove)
+            {
+
                 isTouch = false;
                 js.localPosition = Vector3.zero;
+                //mobileController.SetActive(false);
                 //thePlayer.animator.SetFloat("Speed", 0f);
             }
         }
@@ -57,12 +76,25 @@ public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
     public void OnDrag(PointerEventData eventData)
     {
-        if(isJoystick){
-            if(!thePlayer.notMove){
-                js.anchoredPosition += eventData.delta / canvas.scaleFactor;
-                js.anchoredPosition = Vector2.ClampMagnitude(js.anchoredPosition, r);
+        if (/*type == ControllerType.Joystick ||*/ type == ControllerType.JoyPad )
+        {
+            if (!thePlayer.notMove)
+            {
+                //if(type == ControllerType.JoyPad ){
+                    
+                    Vector3 temp = theCamera.ScreenToWorldPoint(eventData.position);
+                    js.gameObject.transform.position = new Vector3(temp.x, temp.y,0);
+                    js.anchoredPosition = Vector2.ClampMagnitude(js.anchoredPosition, r);
+                //}
+                // else{
+                    
+                //     js.anchoredPosition += eventData.delta / canvas.scaleFactor;
+                //     js.anchoredPosition = Vector2.ClampMagnitude(js.anchoredPosition, r);
+                // }
 
-                Vector3 v = js.localPosition.normalized;
+                Vector3 v = js.anchoredPosition.normalized;
+                // Debug.Log("local"+v);
+                // Debug.Log("anchoredPosition"+js.anchoredPosition);
 
                 if (v.y < 0.7 && v.y > 0)
                 {
@@ -109,39 +141,67 @@ public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
             }
         }
-        
+
 
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(isJoystick){
+        if (/*type == ControllerType.Joystick ||*/ type == ControllerType.JoyPad)
+        {
 
             isTouch = true;
+            OnDrag(eventData);
         }
-        else if(isShift){
+        else if (type == ControllerType.Shift)
+        {
             thePlayer.isRunning = true;
         }
-        else if(isSpace){
-            thePlayer.getSpace = true;
-        }
+        // else if (type == ControllerType.Space)
+        // {
+        //     //thePlayer.getSpace = true;
+        //     Invoke("DelayClick",0.2f);
+        // }
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        if(isJoystick){
+        if (/*type == ControllerType.Joystick||*/ type == ControllerType.JoyPad)
+        {
             isTouch = false;
             js.localPosition = Vector3.zero;
             thePlayer.animator.SetFloat("Speed", 0f);
         }
-        else if(isShift){
+        else if (type == ControllerType.Shift)
+        {
             thePlayer.isRunning = false;
         }
-        else if(isSpace){
-            thePlayer.getSpace = false;
-        }
+        // else if (type == ControllerType.Space)
+        // {
+        //     thePlayer.getSpace = false;
+        // }
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (type == ControllerType.Space)
+        {
+            //if(!thePlayer.isInteracting) 
+            StartCoroutine(DelayClick());
+        }
+        else if (type == ControllerType.Btn1){
+            SelectManager.instance.ClickResult(0);
+        }
+        else if (type == ControllerType.Btn2){
+            SelectManager.instance.ClickResult(1);
+        }
+        else if (type == ControllerType.Btn3){
+            SelectManager.instance.ClickResult(2);
+        }
     }
-#endif
+    IEnumerator DelayClick(){
+        //yield return new WaitForSeconds(0.001f);
+        thePlayer.getSpace = true;
+        yield return new WaitForSeconds(0.001f);
+        thePlayer.getSpace = false;
+    }
 
 }
+#endif

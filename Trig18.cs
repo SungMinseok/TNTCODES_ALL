@@ -84,7 +84,7 @@ public class Trig18 : MonoBehaviour
                 thePlayer.canInteractWith = trigNum;
             }
                         //그 넘버만 실행함.
-            if(!flag && !autoEnable && Input.GetKeyDown(KeyCode.Space)&& !theDM.talking &&thePlayer.canInteractWith==trigNum){
+            if(!flag && !autoEnable && (Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&& !theDM.talking &&thePlayer.canInteractWith==trigNum){
                 flag = true;
                 thePlayer.exc.SetBool("on",false);
                 StartCoroutine(EventCoroutine());

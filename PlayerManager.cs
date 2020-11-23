@@ -87,6 +87,7 @@ public class PlayerManager : MovingObject
     [Header("InMobile")]
     public bool getSpace;
     public bool isRunning;
+    public GameObject joyStick;
 
     void Start(){
         theSL = FindObjectOfType<SaveNLoad>();
@@ -104,6 +105,8 @@ public class PlayerManager : MovingObject
         ResetColor();
 #if DISABLEKEYBOARD
         mobileController.SetActive(true);
+#else
+        mobileController.SetActive(false);
 #endif
 
     }
@@ -124,6 +127,7 @@ public class PlayerManager : MovingObject
             if(isInteracting){
                 notMove = true;
             }
+            //if(!mobileController.activeSelf) mobileController.SetActive(true);
 #if !DISABLEKEYBOARD
             if(Input.GetAxisRaw("Vertical")!=0){
                 movement.x = 0;
@@ -139,6 +143,7 @@ public class PlayerManager : MovingObject
             }
             if(Input.GetKey(KeyCode.LeftShift) && movement!=Vector2.zero && !animator.GetBool("sad")){
                 rb.MovePosition(rb.position + movement * runSpeed * Time.fixedDeltaTime);
+                animator.SetFloat("Speed", 2f);
             }
             else if(movement!=Vector2.zero){
                 rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
@@ -147,8 +152,21 @@ public class PlayerManager : MovingObject
             else if(movement==Vector2.zero){
                 animator.SetFloat("Speed", 0f);
             }
+
 #endif
         }
+        // else if(notMove){
+        //     mobileController.SetActive(false);
+        // }
+#if DISABLEKEYBOARD
+        if((isPlayingGame || isPlayingPuzzle)&&joyStick.activeSelf){
+            joyStick.SetActive(false);
+        }
+        else if(!isPlayingGame && !isPlayingPuzzle && !joyStick.activeSelf){
+            joyStick.SetActive(true);
+        }
+#endif
+
         if(isGameOver){
             animator.SetFloat("Speed", 0);
         }

@@ -51,7 +51,7 @@ public class Trig9 : MonoBehaviour
 
     /////////////////////////////////////////////////////////////////////   해당 위치에서 1. 실행전이고, 2. 키입력시 트리거 발생
     private void OnTriggerStay2D(Collider2D collision){
-        if(collision.gameObject.name == "Player" && !flag && !autoEnable && Input.GetKeyDown(KeyCode.Space)&& !theDM.talking){
+        if(collision.gameObject.name == "Player" && !flag && !autoEnable && (Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&& !theDM.talking){
             flag = true;
         thePlayer.exc.SetBool("on",false);
         thePlayer.canInteractWith = 0;
@@ -82,7 +82,8 @@ public class Trig9 : MonoBehaviour
         
         theCamera.GetComponent<CameraMovement>().moveSpeed=5f;
         theCamera.GetComponent<CameraMovement>().target=centerView;
-        yield return new WaitUntil(()=> Mathf.Abs( theCamera.gameObject.transform.position.x - centerView.gameObject.transform.position.x)<1f);      
+        yield return new WaitForSeconds(1f);
+        //yield return new WaitUntil(()=> Mathf.Abs( theCamera.gameObject.transform.position.x - centerView.gameObject.transform.position.x)<1f);      
         theDM.ShowDialogue(dialogue_1);
         yield return new WaitUntil(()=> !theDM.talking);                    //대화 끝날 때까지 대기 (마지막 제외 필수)
         //Wait();

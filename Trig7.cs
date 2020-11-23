@@ -62,7 +62,7 @@ public class Trig7 : MonoBehaviour
             thePlayer.canInteractWith = trigNum;
         }
 
-        if(collision.gameObject.name == "Player" && !flag && !autoEnable && Input.GetKeyDown(KeyCode.Space)&& !theDM.talking){
+        if(collision.gameObject.name == "Player" && !flag && !autoEnable && (Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&& !theDM.talking){
             flag = true;
         thePlayer.exc.SetBool("on",false);
             StartCoroutine(EventCoroutine());

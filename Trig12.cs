@@ -68,7 +68,7 @@ public class Trig12 : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision){
         if(theDB.puzzleOverList.Contains(0)){
                 
-            if(collision.gameObject.name == "Player" && !flag && !autoEnable && Input.GetKeyDown(KeyCode.Space)&& !theDM.talking){
+            if(collision.gameObject.name == "Player" && !flag && !autoEnable && (Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&& !theDM.talking){
                 flag = true;
                 thePlayer.exc.SetBool("on",false);
                 thePlayer.canInteractWith = 0;

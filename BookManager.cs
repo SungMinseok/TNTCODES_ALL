@@ -311,7 +311,7 @@ public class BookManager : MonoBehaviour
         //onButton.GetComponent<Button>().interactable=false;
         DialogueManager.instance.ShowDialogue(dialogue);
         yield return new WaitUntil(()=> !DialogueManager.instance.talking);
-
+        //DialogueManager.instance.ForceAlphaOut();
         BookOn();
         thePlayer.boxCollider.enabled = true;
     }

@@ -112,7 +112,7 @@ public class Trig45 : MonoBehaviour
                 
                 
             }
-            if(collision.gameObject.name == "Player" && !flag && !autoEnable && Input.GetKeyDown(KeyCode.Space)&& !theDM.talking){
+            if(collision.gameObject.name == "Player" && !flag && !autoEnable && (Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&& !theDM.talking){
                 flag = true;
                 thePlayer.exc.SetBool("on",false);
                 thePlayer.canInteractWith = 0;

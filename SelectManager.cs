@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_ANDROID || UNITY_IOS
+#define DISABLEKEYBOARD
+#endif
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,7 +62,10 @@ public class SelectManager : MonoBehaviour
     private WaitForSeconds waitTime = new WaitForSeconds(0.02f);
     
     private GameMultiLang langS;
-
+    [Header("MOBILE")]
+    public GameObject[] selectBtns;
+    public GameObject[] selectNums;
+    public bool mobileTouch;
     void Start()
     {
         theDM = FindObjectOfType<DialogueManager>();
@@ -76,6 +82,10 @@ public class SelectManager : MonoBehaviour
             answer_Text[i].text = "";
             pointer[i].SetActive(false);
         }
+        for(int i=0; i<selectBtns.Length; i++){
+            selectBtns[i].SetActive(false);
+            selectNums[i].SetActive(false);
+        }
         langS=GameMultiLang.instance;
     }
 
@@ -83,6 +93,7 @@ public class SelectManager : MonoBehaviour
     public void ShowSelect(Select _select){
         
         LocalizeLanguages(_select);
+            PlayerManager.instance.getSpace = false;
         PlayerManager.instance.isInteracting = true;
         Dwindow.SetActive(true);
         Danimator.SetBool("Appear", true);
@@ -136,6 +147,11 @@ public class SelectManager : MonoBehaviour
         
         Swindow.SetActive(false);
         Dwindow.SetActive(false);
+        for(int i=0; i<selectBtns.Length;i++){
+            
+            selectBtns[i].SetActive(false);
+            selectNums[i].SetActive(false);
+        }
         selecting = false;
         PlayerManager.instance.isInteracting = false;
         
@@ -175,11 +191,19 @@ public class SelectManager : MonoBehaviour
         
         Dwindow.SetActive(false);
         Swindow.SetActive(true);
+#if DISABLEKEYBOARD
+        for(int i=0; i<=count;i++){
+            
+            selectBtns[i].SetActive(true);
+            selectNums[i].SetActive(true);
+        }
+#else
         for(int i =0 ; i <= count; i++){
             //listAnswers.Add(_select.answers[i]);
             pointer[i].SetActive(true);
             //count = i;
         }
+#endif
         //yield return new WaitForSeconds(0.2f);
 
         //StartCoroutine(TypingQuestion());
@@ -249,7 +273,28 @@ public class SelectManager : MonoBehaviour
     {
         
         if(questDone&&keyActivated){
+#if DISABLEKEYBOARD              
+            if(PlayerManager.instance.getSpace || mobileTouch){
+
+        mobileTouch = false;
+        PlayerManager.instance.getSpace = false;
+                keyActivated =false;
+                questDone =false;
                 
+                question_Text.text = "";
+                name_Text.text = "";
+                
+                StopAllCoroutines();                
+                        
+                Swindow.SetActive(true);
+                Sanimator.SetBool("Appear", true);
+                
+                Danimator.SetBool("Appear", false);
+                StartCoroutine(SelectCoroutine());
+                //Debug.Log("Z");
+                //Progressing();
+            }          
+#else
             if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return)||Input.GetMouseButtonDown(0)){
 
                 keyActivated =false;
@@ -268,8 +313,11 @@ public class SelectManager : MonoBehaviour
                 //Debug.Log("Z");
                 //Progressing();
             }
+#endif
+                
         }
         if(keyInput){
+#if !DISABLEKEYBOARD 
             if(Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKeyDown(KeyCode.W)){
                 //theAudio.Play(keySound);
                 if(result >0) result--;
@@ -288,12 +336,13 @@ public class SelectManager : MonoBehaviour
                 StopAllCoroutines();
                 ExitSelect();
             }
+#endif
         }
     }
 
     public void ClickResult(int num){
         result = num;
-
+//Debug.Log(num+ result);
         keyInput = false;
         StopAllCoroutines();
         ExitSelect();
@@ -413,5 +462,11 @@ public class SelectManager : MonoBehaviour
             select.question_set = select.question;
             select.answers_set = select.answers;
         }
+    }
+    public void ActivateMobileTouch(){
+#if DISABLEKEYBOARD
+        mobileTouch = true;
+        //StartCoroutine(AMTCO());
+#endif
     }
 }

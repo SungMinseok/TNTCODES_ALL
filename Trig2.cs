@@ -60,7 +60,7 @@ public class Trig2 : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision){
         if(!theDB.trigOverList.Contains(2)){
             
-            if(!thePlayer.exc.GetBool("on")&&!flag){
+            if(!thePlayer.exc.GetBool("on")&&!flag&&(thePlayer.canInteractWith==0||thePlayer.canInteractWith==trigNum)){
                 thePlayer.exc.SetBool("on",true);
                 thePlayer.canInteractWith = trigNum;
             }
@@ -69,7 +69,7 @@ public class Trig2 : MonoBehaviour
                 thePlayer.canInteractWith == trigNum){
                 flag = true;
             thePlayer.exc.SetBool("on",false);
-            thePlayer.canInteractWith = 0;
+            //thePlayer.canInteractWith = 0;
                 StartCoroutine(EventCoroutine());
             }
         }

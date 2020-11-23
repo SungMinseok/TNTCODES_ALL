@@ -99,7 +99,7 @@ public class Trig36 : MonoBehaviour
 
 
             //그 넘버만 실행함.
-            if(collision.gameObject.name == "Player" && !flag && !autoEnable && Input.GetKeyDown(KeyCode.Space)&& !theDM.talking &&thePlayer.canInteractWith==trigNum){
+            if(collision.gameObject.name == "Player" && !flag && !autoEnable && (Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&& !theDM.talking &&thePlayer.canInteractWith==trigNum){
                 flag = true;
                 thePlayer.exc.SetBool("on",false);
                 StartCoroutine(EventCoroutine());

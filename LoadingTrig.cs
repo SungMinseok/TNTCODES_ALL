@@ -126,6 +126,7 @@ public class LoadingTrig : MonoBehaviour
             
             theDB.ResetDB();
             thePlayer.ResetPlayer();
+            thePlayer.isGameOver = false;
             SceneManager.LoadScene("Start");
             //Destroy(theDB.gameObject);
             for(int i=0;i<destroyObject.Length;i++){

@@ -57,7 +57,7 @@ public class Trig22 : MonoBehaviour
 
     /////////////////////////////////////////////////////////////////////   해당 위치에서 1. 실행전이고, 2. 키입력시 트리거 발생
     private void OnTriggerStay2D(Collider2D collision){
-        if(collision.gameObject.name == "Player" && !flag && !autoEnable && Input.GetKeyDown(KeyCode.Space)&& !theDM.talking){
+        if(collision.gameObject.name == "Player" && !flag && !autoEnable && (Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&& !theDM.talking){
             flag = true;
         thePlayer.exc.SetBool("on",false);
         thePlayer.canInteractWith = 0;
