@@ -257,8 +257,17 @@ public class DialogueManager : MonoBehaviour        //
 
         //name.text = listNames[count];
         for(int i=0; i<listSentences[count].Length;i++){                        // 대화 출력 중 한 번 더 누르면 전체 출력.
-            if(mode!=0||((Input.GetKeyDown(KeyCode.Space)||(Input.GetKeyDown(KeyCode.Return))&&!keyActivated)) ||(Input.GetMouseButtonDown(0)&&!keyActivated)){
+#if DISABLEKEYBOARD
+            if(mode!=0||((PlayerManager.instance.getSpace||mobileTouch)&&!keyActivated))
+#else
+            if(mode!=0||((Input.GetKeyDown(KeyCode.Space)||(Input.GetKeyDown(KeyCode.Return))&&!keyActivated)) ||(Input.GetMouseButtonDown(0)&&!keyActivated))
+
+#endif
+            //if(mode!=0||((Input.GetKeyDown(KeyCode.Space)||(Input.GetKeyDown(KeyCode.Return))&&!keyActivated)) ||(Input.GetMouseButtonDown(0)&&!keyActivated))
+            {
                 
+        mobileTouch = false;
+        PlayerManager.instance.getSpace = false;
                 // color_background.a = 0.6f;
                 // color_image.a = 1f;
                 // background.color = color_background;
@@ -305,6 +314,12 @@ public class DialogueManager : MonoBehaviour        //
                 
             }
         }
+#if DISABLEKEYBOARD
+        if(!DatabaseManager.instance.doneIntro){ 
+            DatabaseManager.instance.doneIntro=true;
+            HelpManager.instance.PopUpHelper(0);
+        }
+#endif
         if(!mute) theAudio.Stop(typeSound);
         keyActivated = true;
     }
@@ -315,9 +330,9 @@ public class DialogueManager : MonoBehaviour        //
             //if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return)||PlayerManager.instance.getSpace||Input.GetMouseButtonDown(0)){
 #if DISABLEKEYBOARD            
             if(PlayerManager.instance.getSpace || mobileTouch){
-                keyActivated =false;
         mobileTouch = false;
         PlayerManager.instance.getSpace = false;
+                keyActivated =false;
                 
                 count++;
                 /*if(count>=1&&listNames[count]!=listNames[count-1])*/ 

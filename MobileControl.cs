@@ -13,6 +13,9 @@ public enum ControllerType
     Btn3,
 
 }
+
+//조이스틱 : 조이패드 + 쉬프트 (비활성화 : 퍼즐, 게임, 책, 게임오버 // 반투명 : 대화)
+//상호작용 : 스페이스 (반투명 : 퍼즐, 게임)
 #if UNITY_ANDROID || UNITY_IOS
 public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler, IPointerClickHandler
 {
@@ -161,6 +164,12 @@ public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         //     //thePlayer.getSpace = true;
         //     Invoke("DelayClick",0.2f);
         // }
+        else if (type == ControllerType.Space)
+        {
+            //if(!thePlayer.isInteracting) 
+            StartCoroutine(DelayClick());
+            Debug.Log("누름");
+        }
     }
     public void OnPointerUp(PointerEventData eventData)
     {
@@ -181,12 +190,13 @@ public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (type == ControllerType.Space)
-        {
-            //if(!thePlayer.isInteracting) 
-            StartCoroutine(DelayClick());
-        }
-        else if (type == ControllerType.Btn1){
+        // if (type == ControllerType.Space)
+        // {
+        //     //if(!thePlayer.isInteracting) 
+        //     StartCoroutine(DelayClick());
+        // }
+        // else 
+        if (type == ControllerType.Btn1){
             SelectManager.instance.ClickResult(0);
         }
         else if (type == ControllerType.Btn2){
@@ -199,7 +209,8 @@ public class MobileControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     IEnumerator DelayClick(){
         //yield return new WaitForSeconds(0.001f);
         thePlayer.getSpace = true;
-        yield return new WaitForSeconds(0.001f);
+        yield return null;
+       // yield return new WaitForSeconds(0.001f);
         thePlayer.getSpace = false;
     }
 

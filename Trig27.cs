@@ -183,8 +183,16 @@ public class Trig27 : MonoBehaviour
             //BGMManager.instance.FadeinMusic();
             theDB.progress=4;
             BookManager.instance.ActivateUpdateIcon(2);
-        theDM.ShowDialogue(dialogue_1);
-        yield return new WaitUntil(()=> !theDM.talking);
+            if(theDB.trigOverList.Contains(44)){
+
+                theDM.ShowDialogue(dialogue_2);
+                yield return new WaitUntil(()=> !theDM.talking);
+            }
+            else{
+                
+                theDM.ShowDialogue(dialogue_1);
+                yield return new WaitUntil(()=> !theDM.talking);
+            }   
 
         }    
         else if(trigNum==37){

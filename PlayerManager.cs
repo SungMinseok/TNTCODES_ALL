@@ -159,10 +159,10 @@ public class PlayerManager : MovingObject
         //     mobileController.SetActive(false);
         // }
 #if DISABLEKEYBOARD
-        if((isPlayingGame || isPlayingPuzzle)&&joyStick.activeSelf){
+        if((isPlayingGame || isPlayingPuzzle || isGameOver)&&joyStick.activeSelf){
             joyStick.SetActive(false);
         }
-        else if(!isPlayingGame && !isPlayingPuzzle && !joyStick.activeSelf){
+        else if(!isPlayingGame && !isPlayingPuzzle && !isGameOver && !joyStick.activeSelf){
             joyStick.SetActive(true);
         }
 #endif
@@ -170,15 +170,16 @@ public class PlayerManager : MovingObject
         if(isGameOver){
             animator.SetFloat("Speed", 0);
         }
-        if(Input.GetKeyDown(KeyCode.Space)){
-            getSpace = true;
-        }
-        else if(Input.GetKeyUp(KeyCode.Space)){
-            getSpace = false;
-        }
+        // if(Input.GetKeyDown(KeyCode.Space)){
+        //     getSpace = true;
+        // }
+        // else if(Input.GetKeyUp(KeyCode.Space)){
+        //     getSpace = false;
+        // }
 
     }
     void FixedUpdate(){
+        if(getSpace) Debug.Log("gs");
 #if !DISABLEKEYBOARD
         if(!notMove){
 
@@ -307,7 +308,9 @@ public class PlayerManager : MovingObject
         //exc.SetTrigger("on");
 
         if(!DatabaseManager.instance.doneIntro){                //아주 처음 대화창 띄우기
+#if !DISABLEKEYBOARD
             DatabaseManager.instance.doneIntro=true;
+#endif
             DialogueManager.instance.ShowDialogue(dialogue);
             yield return new WaitUntil(()=> !DialogueManager.instance.talking); 
             //DialogueManager.instance.RenderTest();
@@ -315,6 +318,15 @@ public class PlayerManager : MovingObject
         notMove = false;
         isWakingup = false;
         boxCollider.enabled =true;
+
+        
+#if DISABLEKEYBOARD
+            HelpManager.instance.PopUpHelper(2);
+            yield return new WaitUntil(()=> !HelpManager.instance.helper[2].activeSelf); 
+            yield return new WaitForSeconds(2f);
+            
+            HelpManager.instance.PopUpHelper(1);
+#endif
 
         //HotkeyManager.instance.PopUpHelp();
     }

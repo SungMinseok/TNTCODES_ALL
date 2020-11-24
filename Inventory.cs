@@ -446,8 +446,9 @@ public class Inventory : MonoBehaviour
     {
         if (!thePlayer.isInteracting)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && mainName.text != "" && BookManager.instance.book.activeSelf)
+            if ((Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace) && mainName.text != "" && BookManager.instance.book.activeSelf)
             {
+                thePlayer.getSpace = false;
                 OnClickItem();
             }
 

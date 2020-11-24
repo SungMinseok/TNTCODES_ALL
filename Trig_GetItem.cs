@@ -95,7 +95,7 @@ public class Trig_GetItem : MonoBehaviour
             thePlayer.exc.SetBool("on",true);
         }
 
-        if(!flag&& Input.GetKeyDown(KeyCode.Space)&& !theDM.talking){
+        if(!flag&& (Input.GetKeyDown(KeyCode.Space)||thePlayer.getSpace)&& !theDM.talking){
             flag = true;
             thePlayer.exc.SetBool("on",false);
             StartCoroutine(EventCoroutine());

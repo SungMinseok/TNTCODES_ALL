@@ -165,7 +165,16 @@ public class SelectManager : MonoBehaviour
         
         theAudio.Play(typeSound);
         for(int i=0; i<question.Length;i++){                        // 대화 출력 중 한 번 더 누르면 전체 출력.
-            if(((Input.GetKeyDown(KeyCode.Space)||(Input.GetKeyDown(KeyCode.Return))&&!keyActivated))||(Input.GetMouseButtonDown(0)&&!keyActivated)){
+#if DISABLEKEYBOARD
+            if(((PlayerManager.instance.getSpace||mobileTouch)&&!keyActivated))
+#else
+            if(((Input.GetKeyDown(KeyCode.Space)||(Input.GetKeyDown(KeyCode.Return))&&!keyActivated))||(Input.GetMouseButtonDown(0)&&!keyActivated))
+
+#endif
+            //if(((Input.GetKeyDown(KeyCode.Space)||(Input.GetKeyDown(KeyCode.Return))&&!keyActivated))||(Input.GetMouseButtonDown(0)&&!keyActivated))
+            {
+        mobileTouch = false;
+        PlayerManager.instance.getSpace = false;
                 question_Text.text = question;
                 //answer_Text[i].text = "";
                 //answer_Text[i].text = listAnswers[count];

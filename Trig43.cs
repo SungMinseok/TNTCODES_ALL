@@ -20,6 +20,10 @@ public class Trig43 : MonoBehaviour
     public Dialogue dialogue_1;
     [Header ("잠겼을 때 대사")]
     public Dialogue dialogue_2;
+    [Header ("위에서 아래로 왔을때 잠김 대사")]
+    public Dialogue dialogue_3;
+    [Header ("위에는 뚫고 밑에서 접근시 대사")]
+    public Dialogue dialogue_4;
     public GameObject trig75;
     
     
@@ -47,7 +51,7 @@ public class Trig43 : MonoBehaviour
     ///////////////////////////////////////////////////////////////////   flag는 실행여부 파악 : true이면 실행중/실행완료, false이면 실행전 //  bifer : 분기
     protected bool flag;    // true 이면 다시 실행 안됨.
     
-    private int bifur;
+    public int bifur;
     
     /////////////////////////////////////////////////////////////////////   inspector에서 체크 가능. 1: 닿으면 자동 실행, 2: 체크시 해당 트리거 무한 반복.
     
@@ -86,7 +90,7 @@ public class Trig43 : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision){
         //if(theDB.trigOverList.Contains(24)&&!GameManager.instance.playing&&!theDB.gameOverList.Contains(6)){
         //if(theDB.trigOverList.Contains(3)){
-        if(doorClosed.activeSelf&&theDB.trigOverList.Contains(30)){
+        if(doorClosed.activeSelf/*&&theDB.trigOverList.Contains(30)*/){
 
             // if(!thePlayer.exc.GetBool("on")&&!flag){
             //     thePlayer.exc.SetBool("on",true);
@@ -131,7 +135,7 @@ public class Trig43 : MonoBehaviour
         thePlayer.canInteractWith = 0;
     }
     public void OnMouseDown(){
-         
+        
              
         if(clickable && theDB.OnActivated[11]){
                 thePlayer.exc.SetBool("on",false);
@@ -146,47 +150,127 @@ public class Trig43 : MonoBehaviour
     IEnumerator OpenCoroutine(){
         theOrder.NotMove();  
         if(bifur==0){
-            ObjectManager.instance.FadeOut(wire);
-            StopCoroutine(EventCoroutine());
-            theDM.ShowDialogue(dialogue_0);
-            yield return new WaitUntil(()=> !theDM.talking);
-            AudioManager.instance.Play("boosruck");
-            //wire.SetActive(false);
-            if(thePlayer.currentMapName == "village")
-                theDB.doorEnabledList.Add(21);
-            else if(thePlayer.currentMapName == "catwood"){
-                Debug.Log("업적1 : 도구를 이용해야지");
+            //if(thePlayer.currentMapName == "village"){
+                //촌락 도착전(돌아서 캣우드부터 뚫는 경우)
+                if(!theDB.trigOverList.Contains(30)){   
+                    //촌락에서 : 캣우드뚫고 촌락은 뚫을수 없다.
+                    if(thePlayer.currentMapName == "village"){  
+                                
+                        theDM.ShowDialogue(dialogue_3);
+                        yield return new WaitUntil(()=> !theDM.talking);
+                        flag=false;
+                        clickable = true;
+                    }
+                    //캣우드에서 : 캣우드는 뚫을 수 있다.
+                    else{
+                            trig75.SetActive(false);
+                        ObjectManager.instance.FadeOut(wire);
+                        StopCoroutine(EventCoroutine());
+                        theDM.ShowDialogue(dialogue_0);
+                        yield return new WaitUntil(()=> !theDM.talking);
+                        AudioManager.instance.Play("boosruck");
+                        // if(thePlayer.currentMapName == "village")
+                        //     theDB.doorEnabledList.Add(21);
+                        // else if(thePlayer.currentMapName == "catwood"){
+                            theDB.doorEnabledList.Add(21);
+                        //}
+
+                        // if(theDB.trigOverList.Contains(43)){
+                            
+                        //     Debug.Log("업적1 : 도구를 이용해야지");
+                        //     if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(1);
+                        //     theDB.doorEnabledList.Add(5);
+                        //     Inventory.instance.RemoveItem(11);
+                        //     //trig75.SetActive(false);
+                        //     theDM.ShowDialogue(dialogue_1);
+                        //     yield return new WaitUntil(()=> !theDM.talking);
+                        // }
+
+
+                        bifur =1;
+                        if(onlyOnce)
+                            theDB.trigOverList.Add(trigNum);
+                        if(preserveTrigger)
+                            flag=false;
+                        if(repeatBifur!=0){
+                            theDB.trigOverList.Add(trigNum);
+                            flag=false;
+                            bifur=repeatBifur;
+                        }
+                    }
+                }
+                //촌락 방문 후 : 촌락 or 캣우드
+                else
+                {
+                        ObjectManager.instance.FadeOut(wire);
+                        StopCoroutine(EventCoroutine());
+                        theDM.ShowDialogue(dialogue_0);
+                        yield return new WaitUntil(()=> !theDM.talking);
+                        AudioManager.instance.Play("boosruck");
+                            theDB.doorEnabledList.Add(5);
+                            theDB.doorEnabledList.Add(21);
+                        //wire.SetActive(false);
+                        if(thePlayer.currentMapName == "village"){
+                            if(theDB.trigOverList.Contains(44)){
+                            
+                                Debug.Log("업적1 : 도구를 이용해야지");
+                                if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(1);
+                                Inventory.instance.RemoveItem(11);
+                                theDM.ShowDialogue(dialogue_1);
+                                yield return new WaitUntil(()=> !theDM.talking);
+                            }
+
+                        }
+                        else if(thePlayer.currentMapName == "catwood"){
+                            //theDB.doorEnabledList.Add(21);
+                            trig75.SetActive(false);
+                            if(theDB.trigOverList.Contains(43)){
+                            
+                                Debug.Log("업적1 : 도구를 이용해야지");
+                                if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(1);
+                                Inventory.instance.RemoveItem(11);
+                                theDM.ShowDialogue(dialogue_1);
+                                yield return new WaitUntil(()=> !theDM.talking);
+                            }
+                        }
+
+                        // if(/*theDB.trigOverList.Contains(43)&&*/theDB.trigOverList.Contains(44)){
+                            
+                        //     Debug.Log("업적1 : 도구를 이용해야지");
+                        //     if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(1);
+                        //     theDB.doorEnabledList.Add(5);
+                        //     Inventory.instance.RemoveItem(11);
+                        //     //trig75.SetActive(false);
+                        //     theDM.ShowDialogue(dialogue_1);
+                        //     yield return new WaitUntil(()=> !theDM.talking);
+                        // }
+
+                        //템 삭제.
+                        // if(theDB.doorEnabledList.Contains(5)&&theDB.doorEnabledList.Contains(21)&&Inventory.instance.SearchItem(11)){
+                        //     Inventory.instance.RemoveItem(11);
+                        //     theDM.ShowDialogue(dialogue_1);
+                        //     yield return new WaitUntil(()=> !theDM.talking);
+                        // }
+
+                        bifur =1;
+                        if(onlyOnce)
+                            theDB.trigOverList.Add(trigNum);
+                        if(preserveTrigger)
+                            flag=false;
+                        if(repeatBifur!=0){
+                            theDB.trigOverList.Add(trigNum);
+                            flag=false;
+                            bifur=repeatBifur;
+                        }
+                    }
                 
-                if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(1);
-                theDB.doorEnabledList.Add(5);
-                Inventory.instance.RemoveItem(11);
-                trig75.SetActive(false);
-                theDM.ShowDialogue(dialogue_1);
-                yield return new WaitUntil(()=> !theDM.talking);
-            }
+            //}
 
-            //템 삭제.
-            // if(theDB.doorEnabledList.Contains(5)&&theDB.doorEnabledList.Contains(21)&&Inventory.instance.SearchItem(11)){
-            //     Inventory.instance.RemoveItem(11);
-            //     theDM.ShowDialogue(dialogue_1);
-            //     yield return new WaitUntil(()=> !theDM.talking);
-            // }
-
-            bifur =1;
         }
     
         theOrder.Move(); 
             
     
-        if(onlyOnce)
-            theDB.trigOverList.Add(trigNum);
-        if(preserveTrigger)
-            flag=false;
-        if(repeatBifur!=0){
-            theDB.trigOverList.Add(trigNum);
-            flag=false;
-            bifur=repeatBifur;
-        }
     
     }
 
@@ -202,9 +286,23 @@ public class Trig43 : MonoBehaviour
         //////////////////////////////////////////////////////////////////////트리거마다 수정해야하는 부분 시작
 
         if(bifur==0&&wire.gameObject.activeSelf){
-            
-            theDM.ShowDialogue(dialogue_2);
-            yield return new WaitUntil(()=> !theDM.talking);
+            if(thePlayer.currentMapName == "village"){
+                if(theDB.trigOverList.Contains(30)&&theDB.trigOverList.Contains(44)){
+                    theDM.ShowDialogue(dialogue_4);
+                    yield return new WaitUntil(()=> !theDM.talking);
+                }
+                else{
+                        
+                    theDM.ShowDialogue(dialogue_2);
+                    yield return new WaitUntil(()=> !theDM.talking);
+                }
+
+            }
+            else{
+                    
+                theDM.ShowDialogue(dialogue_2);
+                yield return new WaitUntil(()=> !theDM.talking);
+            }
             theOrder.Move(); 
 
             flag = false;

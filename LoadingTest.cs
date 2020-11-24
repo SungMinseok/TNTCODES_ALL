@@ -21,6 +21,9 @@ public class LoadingTest : MonoBehaviour {
     Color color1;
     bool fadeCheck;
     private WaitForSeconds waitTime = new WaitForSeconds(0.01f);
+    public Sprite help_mobile;
+    public GameObject text_mobile;
+    public GameObject text_normal;
     // public Text loadText;
     // public string loadTextSample;
     private void Start()
@@ -30,6 +33,11 @@ public class LoadingTest : MonoBehaviour {
         bgOff = LoadBGOff();
         bgOn = LoadBGOn();
 
+#if UNITY_ANDROID || UNITY_IOS
+        loadBG.sprite = help_mobile;
+        text_mobile.SetActive(true);
+        text_normal.SetActive(false);
+#endif
         //loadTextSample = "가나다라마바사아자차카타파하";
         //loadingBar.fillAmount = 0;
         StartCoroutine(LoadAsyncScene());
