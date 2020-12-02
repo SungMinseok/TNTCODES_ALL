@@ -118,7 +118,7 @@ public class Block3 : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
     }
 
     public void Relocate(){
-        Debug.Log("Relocate");
+        //Debug.Log("Relocate");
         //if(nowNum == -1 && !isMoving){   //연결시키고 원래 자리로 이동 시킴.
             
             // for(int i=0; i<linkedBlock.Count; i++){ //연결된거 넣어줌.
@@ -136,7 +136,7 @@ public class Block3 : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
         //}
     }
     public void RelocateAtFirst(){
-        Debug.Log("RelocateAtFirst");
+        //Debug.Log("RelocateAtFirst");
         //if(nowNum == -1 && !isMoving){   //연결시키고 원래 자리로 이동 시킴.
             
             // for(int i=0; i<linkedBlock.Count; i++){ //연결된거 넣어줌.

@@ -446,4 +446,11 @@ public class Puzzle1 : MonoBehaviour
             }
         }
     }
+    
+    // void Update(){
+        
+    //     if(Input.GetKeyDown(KeyCode.Escape)&&!thePlayer.isPlayingGame&&!BookManager.instance.ReadableIsOn()){
+    //         exitPuzzle();
+    //     }
+    // }
 }

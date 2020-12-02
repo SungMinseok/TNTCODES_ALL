@@ -29,6 +29,7 @@ public class game6 : MonoBehaviour
         thePlayer.isPlayingGame = true;
     }
     void OnEnable(){
+        PlayerManager.instance.isPlayingGame = true;
 #if ADD_ACH
         counter.SetActive(true);
         count = 0;

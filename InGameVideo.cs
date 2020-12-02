@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_ANDROID || UNITY_IOS
+#define DISABLEKEYBOARD
+#endif
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +42,15 @@ public class InGameVideo : MonoBehaviour
     void Start(){
         thePlayer = PlayerManager.instance;
         //theVideo.audioOutputMode = VideoAudioOutputMode.AudioSource;
+#if DISABLEKEYBOARD
+        videoClips[2]=CursorManager.instance.videoClips[3];
+#else 
+        videoClips[0]=CursorManager.instance.videoClips[3];
+        videoClips[1]=CursorManager.instance.videoClips[4];
+        videoClips[2]=CursorManager.instance.videoClips[5];
+        videoClips[3]=CursorManager.instance.videoClips[6];
+        videoClips[4]=CursorManager.instance.videoClips[7];
+#endif
 
     }
     public void StartVideo(string videoName)

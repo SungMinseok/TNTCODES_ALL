@@ -203,7 +203,7 @@ public class Trig32 : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (clickable)
+        if (clickable&&theDB.OnActivated[0])
         {
             switch (trigNum)
             {

@@ -94,7 +94,7 @@ public class Control2 : MonoBehaviour
             
         }
 
-        Debug.Log("퍼즐 완성");
+        //Debug.Log("퍼즐 완성");
 
         //game18.passGame();
         AudioManager.instance.Play("success0");

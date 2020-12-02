@@ -54,19 +54,23 @@ public class game18 : MonoBehaviour
         AudioManager.instance.Play("puzzle0");
         for(int i=0; i<control.blocks.Length; i++){
             control.slots[i].check = false;
-            if(control.blocks[i].nowNum != -1){
+            //if(control.blocks[i].nowNum != -1){
                 control.blocks[i].nowNum = -1;
                 control.blocks[i].check = false;
+                control.blocks[i].canvasGroup.blocksRaycasts = true;
+                control.blocks[i].canvasGroup.alpha = 1f;
                 control.blocks[i].RelocateAtFirst();
-            }
+            //}
         }
         for(int j=0; j<control.fakeBlocks.Length; j++){
-            if(control.fakeBlocks[j].nowNum != -1){
+            //if(control.fakeBlocks[j].nowNum != -1){
                 control.fakeBlocks[j].nowNum = -1;
                 control.fakeBlocks[j].check = false;
+                control.fakeBlocks[j].canvasGroup.blocksRaycasts = true;
+                control.fakeBlocks[j].canvasGroup.alpha = 1f;
                 control.fakeBlocks[j].RelocateAtFirst();
             //control.slots[i].check = false;
-            }
+            //}
         }
         
     }

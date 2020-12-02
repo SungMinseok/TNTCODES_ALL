@@ -22,7 +22,7 @@ public class Block : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDra
     public bool fixedBlock;
 
     //[SerializeField] private CaseInsensitiveHashCodeProvider caseInsensitiveHash;
-    private CanvasGroup canvasGroup;
+    public CanvasGroup canvasGroup;
     //private Control con;
 
 
@@ -118,7 +118,7 @@ public class Block : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDra
     public void Relocate(){
         if(!fixedBlock){
 
-            Debug.Log("Relocate");
+            //Debug.Log("Relocate");
             //if(nowNum == -1 && !isMoving){   //연결시키고 원래 자리로 이동 시킴.
                 
                 for(int i=0; i<linkedBlock.Count; i++){ //연결된거 넣어줌.

@@ -151,6 +151,7 @@ public class SettingManager : MonoBehaviour
         //SceneManager.LoadScene("start");
         
         theLT.loadWindow.SetActive(true);  //로딩창 온
+            thePlayer.isLoading = true;
         
         
         yield return new WaitForSeconds(0.01f);
@@ -179,6 +180,7 @@ public class SettingManager : MonoBehaviour
         
         yield return new WaitForSeconds(2f);
         theLT.loadWindow.SetActive(false);
+            thePlayer.isLoading = false;
         thePlayer.LetBegin();
         //yield return new WaitForSeconds(2f);
         //theSL.CallLoad(num);

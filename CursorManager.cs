@@ -1,15 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class CursorManager : MonoBehaviour
 {
     public static CursorManager instance;
+#if UNITY_ANDROID || UNITY_IOS
+    [Header("0: 타이틀, 1: 달리기, 2: 눈, 3: 끝로고")]
+    public VideoClip[] videoClips_MOBILE;
+#else
+    [Header("0: 타이틀, 1: 달리기, 2: 눈, 3: 진엔딩, 4: 크레딧, 5: 끝로고, 6: 진엔딩(영어), 7: 크레딧(진엔딩)")]
+    public VideoClip[] videoClips_PC;
+#endif
+    public VideoClip[] videoClips;
      private void Awake()
 
 
 
     {
+#if UNITY_ANDROID || UNITY_IOS 
+        videoClips = videoClips_MOBILE;
+#else
+        videoClips = videoClips_PC;
+#endif
         if(instance == null)
         {
             DontDestroyOnLoad(this.gameObject);
@@ -42,6 +56,7 @@ public class CursorManager : MonoBehaviour
     // Start is called before the first frame update
     private DatabaseManager theDB;
     PlayerManager thePlayer;
+    public 
     void Start()
     {
         theDB=DatabaseManager.instance;
@@ -50,6 +65,8 @@ public class CursorManager : MonoBehaviour
         //Cursor.visible =false;
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
         //SetCursorState(1);
+
+
     }
 
     void Update(){

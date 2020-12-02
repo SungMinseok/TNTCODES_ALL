@@ -26,10 +26,11 @@ public class game2 : MonoBehaviour
         thePlayer = PlayerManager.instance;
         //thePuzzle = Puzzle1.instance;
 
-        thePlayer.isPlayingGame = true;
+        //thePlayer.isPlayingGame = true;
 
     }
     void OnEnable(){
+        PlayerManager.instance.isPlayingGame = true;
 #if ADD_ACH
         counter.SetActive(true);
         count = 0;
@@ -38,6 +39,7 @@ public class game2 : MonoBehaviour
     }
     public void exitGame(){
         Puzzle1.instance.inMain = true;
+        thePlayer.isPlayingGame = false;
         if(theDB.puzzleOverList.Contains(1)) Puzzle1.instance.SpritesOn();
             AudioManager.instance.Play("button20");
         gameObject.SetActive(false);
@@ -82,6 +84,8 @@ public class game2 : MonoBehaviour
             //if(control.blocks[i].nowNum!=-1){
                     
                 control.blocks[i].Relocate();
+                control.blocks[i].canvasGroup.blocksRaycasts = true;
+                control.blocks[i].canvasGroup.alpha = 1f;
                 control.blocks[i].nowNum=-1;
                 control.blocks[i].check=false;
             //}
@@ -103,4 +107,10 @@ public class game2 : MonoBehaviour
         countText.text = count.ToString("N0");
     }
 #endif
+    // void Update(){
+        
+    //     if(Input.GetKeyDown(KeyCode.Escape)&&!BookManager.instance.ReadableIsOn()){
+    //         exitGame();
+    //     }
+    // }
 }

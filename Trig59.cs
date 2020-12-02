@@ -179,8 +179,8 @@ public class Trig59 : MonoBehaviour
             
                 refuseCount ++;
                 if(refuseCount==3){
-                    Debug.Log("업적17");        
-                    if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(17);
+                    Debug.Log("업적12");        
+                    if(SteamAchievement.instance!=null) SteamAchievement.instance.ApplyAchievements(12);
                 }
             
 //#endif

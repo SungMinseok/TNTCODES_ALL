@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_ANDROID || UNITY_IOS
+#define DISABLEKEYBOARD
+#endif
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -140,8 +143,12 @@ public class Trig74 : MonoBehaviour
         #endif
 
 //페이드아웃 했다가 밝아지면서 책 펼쳐지고 책아이콘 삭제.
+        // thePlayer.joyBundle.SetActive(false);
+        // thePlayer.joyStick.SetActive(false);
+
         Fade2Manager.instance.FadeOut(0.02f);
         yield return new WaitForSeconds(2f);
+        thePlayer.isPlayingGame = true;
         Fade2Manager.instance.FadeIn(0.02f);
         BookManager.instance.BookOn(false);
         BookManager.instance.OnPaper();
@@ -181,14 +188,28 @@ public class Trig74 : MonoBehaviour
                     else{
                         yield return new WaitForSeconds(3f);//3
                     }
+                    PaperManager.instance.waitStory = true;
+                    BookManager.instance.nextBtn.SetActive(true);
+                    yield return new WaitUntil(()=> !PaperManager.instance.waitStory);
+                    PaperManager.instance.ShowRightPage(true);
+
                     PaperManager.instance.paperUnlocked[2*j+i-1].SetActive(false);
                     PaperManager.instance.paperUnlocked[2*j+i].SetActive(false);
                     PaperManager.instance.textUnlocked[2*j+i-1].gameObject.SetActive(false);
                     PaperManager.instance.textUnlocked[2*j+i].gameObject.SetActive(false);
                 }
             }
-            if(j<2) PaperManager.instance.ShowRightPage(true);
+            // if(j<2) {
+            //     PaperManager.instance.waitStory = true;
+            //     BookManager.instance.nextBtn.SetActive(true);
+            //     yield return new WaitUntil(()=> !PaperManager.instance.waitStory);
+            //     PaperManager.instance.ShowRightPage(true);
+            // }
         }
+        PaperManager.instance.waitStory = true;
+        BookManager.instance.nextBtn.SetActive(true);
+        yield return new WaitUntil(()=> !PaperManager.instance.waitStory);
+
 
 
 #if DEV_MODE
@@ -199,10 +220,10 @@ public class Trig74 : MonoBehaviour
 
 
 
-
-
+#if !DISABLEKEYBOARD
 
 #region (영상) 진엔딩 언노운
+
         if(PaperManager.instance.letter0.activeSelf&&PaperManager.instance.letter1.activeSelf){
             BGMManager.instance.FadeOutMusic();
             Fade2Manager.instance.FadeOut(0.02f);
@@ -240,9 +261,11 @@ public class Trig74 : MonoBehaviour
         }
 #endregion
         
-#region (인게임 애니메이션) 노멀엔딩
+//#region (인게임 애니메이션) 노멀엔딩
         //yield return new WaitForSeconds(2f);
-        else{
+        else
+#endif  //진엔딩 모바일 끄기.
+        {
     //페이드아웃 했다가 밝아지면서 책 닫고 책 닫는 애니메이션.
             Fade2Manager.instance.FadeOut(0.02f);
             yield return new WaitForSeconds(2f);
@@ -292,7 +315,7 @@ public class Trig74 : MonoBehaviour
 
             
         }
-#endregion
+//#endregion
 
 #region (업적) 시간
 
@@ -321,6 +344,7 @@ public class Trig74 : MonoBehaviour
 //         }
 // #endregion
 
+#if !DISABLEKEYBOARD
 #region (영상) 크레딧
 
 
@@ -344,6 +368,7 @@ public class Trig74 : MonoBehaviour
             yield return new WaitForSeconds(4f);
             InGameVideo.instance.ExitVideo();
 #endregion
+#endif  //모바일 크레딧 끄기
 
 #region (영상) 로고
 

@@ -26,13 +26,14 @@ public class game0 : MonoBehaviour
         theDB = DatabaseManager.instance;
         thePlayer= PlayerManager.instance;
 
-        thePlayer.isPlayingGame = true;
+        //thePlayer.isPlayingGame = true;
 
         GoRandom();
         
 
     }
     void OnEnable(){
+        PlayerManager.instance.isPlayingGame = true;
 #if ADD_ACH
         counter.SetActive(true);
         count = 0;
@@ -117,6 +118,7 @@ public class game0 : MonoBehaviour
 
     public void exitGame(){
         Puzzle0.instance.inMain = true;
+            thePlayer.isPlayingGame = false;
         Puzzle0.instance.SpritesOn();
             AudioManager.instance.Play("button20");
         whatGame.SetActive(false);

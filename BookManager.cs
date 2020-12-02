@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_ANDROID || UNITY_IOS
+#define DISABLEKEYBOARD
+#endif
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +32,11 @@ public class BookManager : MonoBehaviour
     public GameObject unknownManaul;
     public GameObject mazeManaul;
     public GameObject mazeManaul_en;
+    public GameObject makersInfo;
+    public GameObject[] readables;
+    [Space]
+    public GameObject help;
+
     [Header ("Basic")]
     public GameObject book;
     public GameObject updateIcon;
@@ -47,6 +55,7 @@ public class BookManager : MonoBehaviour
     public Text settingText;
     public GameObject disableBtn;
     public GameObject[] btns;
+    public GameObject nextBtn;
     [Header ("Update")]
     public GameObject[] updateIcons;
 
@@ -77,7 +86,9 @@ public class BookManager : MonoBehaviour
         theAudio = AudioManager.instance;
         thePaper = PaperManager.instance;
         thePuzzle = PuzzleManager.instance;
-        
+#if DISABLEKEYBOARD
+        help.SetActive(false);
+#endif
 
 
         
@@ -352,6 +363,18 @@ public class BookManager : MonoBehaviour
                 settingText.color = selectedCol;
                 break;
         }
+    }
+    public void StoryNextBtn(){
+        nextBtn.SetActive(false);
+        PaperManager.instance.waitStory = false;
+    }
+    public bool ReadableIsOn(){
+        for(int i=0; i<readables.Length; i++){
+            if(readables[i].activeSelf){
+                return true;
+            }
+        }
+        return false;
     }
     
 }

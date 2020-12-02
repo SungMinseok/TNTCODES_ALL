@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 public class HelpManager : MonoBehaviour
 {
-#if DISABLEKEYBOARD
     public static HelpManager instance;
     public GameObject bundle;
     public GameObject[] helper;
     public bool onClick;
+#if DISABLEKEYBOARD
     private void Awake()
     {
         if(instance != null)
@@ -37,6 +37,7 @@ public class HelpManager : MonoBehaviour
     }
     public void PopUpHelper(int num){
         PlayerManager.instance.notMove = true;
+        PlayerManager.instance.animator.SetFloat("Speed",0f);
         bundle.SetActive(true);
         helper[num].SetActive(true);
     }
@@ -47,6 +48,7 @@ public class HelpManager : MonoBehaviour
         if(onClick){
             onClick = false;
             PlayerManager.instance.notMove = false;
+            PlayerManager.instance.getSpace = true;
             for(int i=0;i<helper.Length;i++){
                 helper[i].SetActive(false);
             }

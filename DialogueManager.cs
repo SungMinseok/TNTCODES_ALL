@@ -98,7 +98,7 @@ public class DialogueManager : MonoBehaviour        //
         langS=GameMultiLang.instance;
         //thePlayer=PlayerManager.instance;
 #if DISABLEKEYBOARD
-        imageColor.GetComponent<RectTransform>().localScale = new Vector2(12,12);
+        imageColor.GetComponent<RectTransform>().localScale = new Vector2(20.23455f,20.23455f);
 #endif
     }
 

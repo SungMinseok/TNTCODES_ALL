@@ -16,7 +16,7 @@ public class Bound : MonoBehaviour
         bound = GetComponent<BoxCollider2D>();
         
 #if UNITY_ANDROID || UNITY_IOS 
-Debug.Log(bound.size.x* transform.localScale.x);
+//Debug.Log(bound.size.x* transform.localScale.x);
         if(bound.size.x*transform.localScale.x<22.6)
             bound.size = new Vector2(22.6f/transform.localScale.x,bound.size.y);
 #endif

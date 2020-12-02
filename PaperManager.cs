@@ -51,6 +51,7 @@ public class PaperManager : MonoBehaviour
     public int currentPage; //현재 보고 있는 페이지(2장의 paper per page)
     public bool blurAnim;
     private DatabaseManager theDB;
+    public bool waitStory;
     
     void Start(){
         //activatedPaper = DatabaseManager.instance.activatedPaper;

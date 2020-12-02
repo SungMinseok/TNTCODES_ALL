@@ -87,7 +87,9 @@ public class PlayerManager : MovingObject
     [Header("InMobile")]
     public bool getSpace;
     public bool isRunning;
+    public bool isLoading;
     public GameObject joyStick;
+    public GameObject joyBundle;
 
     void Start(){
         theSL = FindObjectOfType<SaveNLoad>();
@@ -159,10 +161,10 @@ public class PlayerManager : MovingObject
         //     mobileController.SetActive(false);
         // }
 #if DISABLEKEYBOARD
-        if((isPlayingGame || isPlayingPuzzle || isGameOver)&&joyStick.activeSelf){
+        if((isPlayingGame || isPlayingPuzzle || isGameOver || isLoading )&&joyStick.activeSelf){
             joyStick.SetActive(false);
         }
-        else if(!isPlayingGame && !isPlayingPuzzle && !isGameOver && !joyStick.activeSelf){
+        else if(!isPlayingGame && !isPlayingPuzzle && !isGameOver && !isLoading && !joyStick.activeSelf){
             joyStick.SetActive(true);
         }
 #endif
@@ -314,12 +316,10 @@ public class PlayerManager : MovingObject
             DialogueManager.instance.ShowDialogue(dialogue);
             yield return new WaitUntil(()=> !DialogueManager.instance.talking); 
             //DialogueManager.instance.RenderTest();
-        }                             
-        notMove = false;
-        isWakingup = false;
-        boxCollider.enabled =true;
+            notMove = false;
+            isWakingup = false;
+            boxCollider.enabled =true;
 
-        
 #if DISABLEKEYBOARD
             HelpManager.instance.PopUpHelper(2);
             yield return new WaitUntil(()=> !HelpManager.instance.helper[2].activeSelf); 
@@ -327,6 +327,13 @@ public class PlayerManager : MovingObject
             
             HelpManager.instance.PopUpHelper(1);
 #endif
+        }
+        else{
+
+            notMove = false;
+            isWakingup = false;
+            boxCollider.enabled =true;
+        }                             
 
         //HotkeyManager.instance.PopUpHelp();
     }

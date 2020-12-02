@@ -23,6 +23,9 @@ public class IntroVideo : MonoBehaviour
             skipBtn.SetActive(false);
         }
         ClearOutRenderTexture(texture);
+        
+        videoClips[0] = CursorManager.instance.videoClips[1];
+        videoClips[1] = CursorManager.instance.videoClips[2];
 
 #if DEV_MODE
 

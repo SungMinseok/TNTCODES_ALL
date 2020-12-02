@@ -18,6 +18,7 @@ public class MainVideo : MonoBehaviour
     {
         menu.SetActive(false);
         ClearOutRenderTexture(texture);
+        theVideo.clip = CursorManager.instance.videoClips[0];
         //theVideo.Play();
         StartCoroutine(Wait());    
         BGM = FindObjectOfType<BGMManager>();

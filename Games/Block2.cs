@@ -26,7 +26,7 @@ public class Block2 : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDr
 
 
     //[SerializeField] private CaseInsensitiveHashCodeProvider caseInsensitiveHash;
-    private CanvasGroup canvasGroup;
+    public CanvasGroup canvasGroup;
     //private Control con;
 
 
